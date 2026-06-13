@@ -78,6 +78,12 @@ def update_session(group: str, session_id: str, data: dict):
     path.write_text(json.dumps(existing, indent=2))
 
 
+def delete_group(name: str):
+    groups = list_groups()
+    groups = [g for g in groups if g["name"] != name]
+    GROUPS_FILE.write_text(json.dumps(groups, indent=2))
+
+
 def list_materials(group: str) -> list[str]:
     upload_dir = UPLOADS_DIR / group
     if not upload_dir.exists():
