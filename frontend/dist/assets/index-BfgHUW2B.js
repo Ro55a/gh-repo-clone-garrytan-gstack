@@ -1,1 +1,1 @@
-$(cat /tmp/js_bundle_content.txt)
+placeholder_will_be_replaced
