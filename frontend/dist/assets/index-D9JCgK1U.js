@@ -1,1 +1,1 @@
-$(cat /tmp/js_content.txt)
+PLACEHOLDER
