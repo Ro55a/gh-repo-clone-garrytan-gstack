@@ -8,7 +8,7 @@ import {
   Sparkles, Check, ArrowUpRight
 } from 'lucide-react'
 
-// ─── Animation helpers ────────────────────────────────────────────────────────────────────────────────
+// ─── Animation helpers ────────────────────────────────────────────────────────
 
 const stagger = (delay = 0) => ({
   hidden:  { opacity: 0, y: 28 },
@@ -25,7 +25,7 @@ function Reveal({ children, delay = 0, className = '' }) {
   )
 }
 
-// ─── Data ──────────────────────────────────────────────────────────────────────────────────
+// ─── Data ─────────────────────────────────────────────────────────────────────
 
 const MARQUEE_ITEMS = [
   { icon: BookOpen, label: '1-on-1 Tutoring' },
@@ -60,7 +60,7 @@ const QUOTES = [
   '"The best tool I\'ve found for tutors"',
 ]
 
-// ─── Hero mockup ────────────────────────────────────────────────────────────────────────────────
+// ─── Hero mockup ──────────────────────────────────────────────────────────────
 
 function HeroMockup() {
   return (
@@ -113,7 +113,7 @@ function HeroMockup() {
   )
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────────────────────────
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function Landing() {
   const navigate = useNavigate()

@@ -25,7 +25,7 @@ const TypeIcon = ({ type, size = 16 }) => {
   return T ? <T.icon size={size} style={{ color: T.color }} /> : <BookOpen size={size} />
 }
 
-// ─── Session Type Picker ───────────────────────────────────────────────────────────────────────────────
+// ─── Session Type Picker ──────────────────────────────────────────────────────
 
 function SessionTypePicker({ value, onChange }) {
   return (
@@ -65,7 +65,7 @@ function SessionTypePicker({ value, onChange }) {
   )
 }
 
-// ─── Sidebar ──────────────────────────────────────────────────────────────────────────────────
+// ─── Sidebar ──────────────────────────────────────────────────────────────────
 
 function Sidebar({ groups, selected, onSelect, onAddGroup }) {
   const navigate = useNavigate()
@@ -149,7 +149,7 @@ function Sidebar({ groups, selected, onSelect, onAddGroup }) {
   )
 }
 
-// ─── Add Group Modal ─────────────────────────────────────────────────────────────────────────────
+// ─── Add Group Modal ───────────────────────────────────────────────────────────
 
 function AddGroupModal({ open, onClose, onCreated }) {
   const [name, setName] = useState('')
@@ -191,7 +191,7 @@ function AddGroupModal({ open, onClose, onCreated }) {
   )
 }
 
-// ─── Upload Zone ───────────────────────────────────────────────────────────────────────────────
+// ─── Upload Zone ───────────────────────────────────────────────────────────────
 
 function UploadZone({ onUpload }) {
   const [dragOver, setDragOver] = useState(false)
@@ -225,7 +225,7 @@ function UploadZone({ onUpload }) {
   )
 }
 
-// ─── Materials Tab ───────────────────────────────────────────────────────────────────────────────
+// ─── Materials Tab ─────────────────────────────────────────────────────────────
 
 function MaterialsTab({ group }) {
   const [files, setFiles] = useState([])
@@ -295,7 +295,7 @@ function MaterialsTab({ group }) {
   )
 }
 
-// ─── Plan Tab ────────────────────────────────────────────────────────────────────────────────────
+// ─── Plan Tab ──────────────────────────────────────────────────────────────────
 
 function PlanTab({ group }) {
   const [inputMode, setInputMode] = useState('paste')
@@ -372,7 +372,7 @@ function PlanTab({ group }) {
   )
 }
 
-// ─── Report Tab ──────────────────────────────────────────────────────────────────────────────────
+// ─── Report Tab ────────────────────────────────────────────────────────────────
 
 function ReportTab({ group }) {
   const [sessions, setSessions] = useState([])
@@ -457,7 +457,7 @@ function ReportTab({ group }) {
   )
 }
 
-// ─── History Tab ─────────────────────────────────────────────────────────────────────────────────
+// ─── History Tab ───────────────────────────────────────────────────────────────
 
 function HistoryTab({ group }) {
   const [sessions, setSessions] = useState([])
@@ -551,7 +551,7 @@ function HistoryTab({ group }) {
   )
 }
 
-// ─── Dashboard root ───────────────────────────────────────────────────────────────────────────────
+// ─── Dashboard root ────────────────────────────────────────────────────────────
 
 const MAIN_TABS = [
   { id: 'materials', label: 'Materials',     icon: FileText  },
