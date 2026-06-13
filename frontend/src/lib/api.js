@@ -11,11 +11,12 @@ async function req(path, method = 'GET', body = null) {
 
 export const api = {
   getGroups: () => req('/groups'),
-  createGroup: (name, session_type, extra_context) => {
+  createGroup: (name, session_type, extra_context, next_session_date) => {
     const fd = new FormData()
     fd.append('name', name)
     fd.append('session_type', session_type)
     fd.append('extra_context', extra_context || '')
+    fd.append('next_session_date', next_session_date || '')
     return req('/groups', 'POST', fd)
   },
 
@@ -35,11 +36,12 @@ export const api = {
     return req(`/transcript/${enc(group)}`, 'POST', fd)
   },
 
-  generatePlan: (group, sessionId, sessionType, extraContext) => {
+  generatePlan: (group, sessionId, sessionType, extraContext, sessionDate) => {
     const fd = new FormData()
     fd.append('session_type', sessionType || 'tutoring')
     if (sessionId) fd.append('session_id', sessionId)
     if (extraContext) fd.append('extra_context', extraContext)
+    if (sessionDate) fd.append('session_date', sessionDate)
     return req(`/plan/${enc(group)}`, 'POST', fd)
   },
 

@@ -3,30 +3,22 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 load_dotenv()
 
 app = FastAPI(title="SessionIQ API")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 UPLOADS_DIR = Path("uploads")
 SESSIONS_DIR = Path("sessions")
 UPLOADS_DIR.mkdir(exist_ok=True)
 SESSIONS_DIR.mkdir(exist_ok=True)
 
-# Serve built frontend in production
-frontend_dist = Path("../frontend/dist")
-if frontend_dist.exists():
-    app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+# Serve built frontend
+FRONTEND_DIST = Path("../frontend/dist")
+if FRONTEND_DIST.exists():
+    app.mount("/assets", StaticFiles(directory=str(FRONTEND_DIST / "assets")), name="assets")
 
 
 # --- Groups ---
@@ -42,11 +34,12 @@ def create_group(
     name: str = Form(...),
     session_type: str = Form("tutoring"),
     extra_context: str = Form(""),
+    next_session_date: str = Form(""),
 ):
     from services.session_store import add_group
     if not name.strip():
         raise HTTPException(400, "Name is required")
-    return add_group(name.strip(), session_type, extra_context.strip())
+    return add_group(name.strip(), session_type, extra_context.strip(), next_session_date.strip())
 
 
 # --- Materials ---
@@ -95,7 +88,6 @@ async def submit_transcript(
     from services.session_store import save_session
 
     if file:
-        suffix = Path(file.filename).suffix.lower()
         tmp = Path(f"/tmp/{file.filename}")
         with tmp.open("wb") as f:
             shutil.copyfileobj(file.file, f)
@@ -118,6 +110,7 @@ def generate_plan(
     session_id: str = Form(None),
     session_type: str = Form("tutoring"),
     extra_context: str = Form(""),
+    session_date: str = Form(""),
 ):
     from services.claude_client import generate_session_plan
     from services.session_store import (
@@ -141,10 +134,14 @@ def generate_plan(
 
     plan = generate_session_plan(materials, transcript, group, session_type, extra_context)
 
+    update_data = {"plan": plan, "session_type": session_type}
+    if session_date:
+        update_data["session_date"] = session_date
+
     if session_id:
-        update_session(group, session_id, {"plan": plan, "session_type": session_type})
+        update_session(group, session_id, update_data)
     else:
-        session_id = save_session(group, {"plan": plan, "session_type": session_type})
+        session_id = save_session(group, update_data)
 
     return {"session_id": session_id, "plan": plan}
 
@@ -196,3 +193,13 @@ async def generate_report(
 def get_sessions(group: str):
     from services.session_store import list_sessions
     return list_sessions(group)
+
+
+# --- Serve frontend for all other routes ---
+
+@app.get("/{full_path:path}")
+def serve_frontend(full_path: str):
+    index = FRONTEND_DIST / "index.html"
+    if index.exists():
+        return FileResponse(str(index))
+    return {"message": "SessionIQ API running. Frontend not built yet."}

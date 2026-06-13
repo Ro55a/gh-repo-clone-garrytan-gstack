@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import {
   BookOpen, Users, Briefcase, Heart, Plus, Trash2,
   Upload, FileText, Zap, TrendingUp, History,
-  Copy, ChevronDown, ChevronUp, X, ArrowLeft
+  Copy, ChevronDown, ChevronUp, ArrowLeft, Calendar, Clock
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
@@ -26,11 +26,6 @@ const typeColor = (t) => SESSION_TYPES.find((s) => s.id === t)?.color || '#4F46E
 const TypeIcon = ({ type, size = 16 }) => {
   const T = SESSION_TYPES.find((s) => s.id === type)
   return T ? <T.icon size={size} style={{ color: T.color }} /> : <BookOpen size={size} />
-}
-
-function formatTs(ts) {
-  if (!ts || ts.length < 15) return ts
-  return `${ts.slice(0, 4)}-${ts.slice(4, 6)}-${ts.slice(6, 8)} ${ts.slice(9, 11)}:${ts.slice(11, 13)}`
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
@@ -72,7 +67,14 @@ function Sidebar({ groups, selected, onSelect, onAddGroup }) {
               }`}
             >
               <TypeIcon type={g.session_type} size={15} />
-              <span className="flex-1 truncate font-medium">{g.name}</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium truncate">{g.name}</p>
+                {g.next_session_date && (
+                  <p className="text-xs text-muted truncate flex items-center gap-1 mt-0.5">
+                    <Calendar size={10} /> {g.next_session_date}
+                  </p>
+                )}
+              </div>
             </button>
           )}
         />
@@ -90,11 +92,12 @@ function AddGroupModal({ open, onClose, onCreated }) {
   const [name, setName] = useState('')
   const [type, setType] = useState('tutoring')
   const [context, setContext] = useState('')
+  const [nextDate, setNextDate] = useState('')
   const { loading, error, run } = useAsync()
 
   const submit = async () => {
-    const g = await run(() => api.createGroup(name.trim(), type, context.trim()))
-    if (g) { onCreated(g); onClose(); setName(''); setContext('') }
+    const g = await run(() => api.createGroup(name.trim(), type, context.trim(), nextDate.trim()))
+    if (g) { onCreated(g); onClose(); setName(''); setContext(''); setNextDate('') }
   }
 
   return (
@@ -113,6 +116,13 @@ function AddGroupModal({ open, onClose, onCreated }) {
             <option key={t.id} value={t.id}>{t.label}</option>
           ))}
         </Select>
+        <Input
+          label="Next session date (optional)"
+          value={nextDate}
+          onChange={(e) => setNextDate(e.target.value)}
+          placeholder="e.g. 20 June 2026, every Thursday..."
+          type="text"
+        />
         <Textarea
           label="Additional context (optional)"
           value={context}
@@ -174,7 +184,6 @@ function MaterialsTab({ group }) {
 
       <AnimatePresence>{alert && <Alert message={alert.msg} type={alert.type} onDismiss={() => setAlert(null)} />}</AnimatePresence>
 
-      {/* Drop zone */}
       <motion.label
         onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
         onDragLeave={() => setDragOver(false)}
@@ -192,7 +201,6 @@ function MaterialsTab({ group }) {
         <input type="file" className="hidden" multiple accept=".docx,.txt,.md" onChange={(e) => upload(e.target.files)} />
       </motion.label>
 
-      {/* File list */}
       {loading && <div className="flex justify-center py-4"><Spinner /></div>}
       <AnimatedList
         items={files}
@@ -224,8 +232,8 @@ function PlanTab({ group }) {
   const [transcript, setTranscript] = useState('')
   const [file, setFile] = useState(null)
   const [sessionType, setSessionType] = useState(group.session_type || 'tutoring')
+  const [sessionDate, setSessionDate] = useState('')
   const [plan, setPlan] = useState('')
-  const [sessionId, setSessionId] = useState(null)
   const [alert, setAlert] = useState(null)
   const { loading, error, run } = useAsync()
 
@@ -233,7 +241,6 @@ function PlanTab({ group }) {
     setAlert(null)
     let sid = null
 
-    // Save transcript first if provided
     if (inputMode === 'paste' && transcript.trim()) {
       const t = await run(() => api.submitTranscript(group.name, transcript.trim(), null))
       if (!t) return
@@ -244,11 +251,8 @@ function PlanTab({ group }) {
       sid = t.session_id
     }
 
-    const result = await run(() => api.generatePlan(group.name, sid, sessionType, group.extra_context))
-    if (result) {
-      setPlan(result.plan)
-      setSessionId(result.session_id)
-    }
+    const result = await run(() => api.generatePlan(group.name, sid, sessionType, group.extra_context, sessionDate))
+    if (result) setPlan(result.plan)
   }
 
   return (
@@ -259,9 +263,17 @@ function PlanTab({ group }) {
       <AnimatePresence>{(error || alert) && <Alert message={error || alert?.msg} type={alert?.type || 'error'} onDismiss={() => setAlert(null)} />}</AnimatePresence>
 
       <div className="space-y-4 mb-6">
-        <Select label="Session type" value={sessionType} onChange={(e) => setSessionType(e.target.value)}>
-          {SESSION_TYPES.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
-        </Select>
+        <div className="grid grid-cols-2 gap-3">
+          <Select label="Session type" value={sessionType} onChange={(e) => setSessionType(e.target.value)}>
+            {SESSION_TYPES.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
+          </Select>
+          <Input
+            label="Next session date (optional)"
+            value={sessionDate}
+            onChange={(e) => setSessionDate(e.target.value)}
+            placeholder="e.g. 20 June 2026"
+          />
+        </div>
 
         <Tabs
           tabs={[{ id: 'paste', label: 'Paste transcript', icon: FileText }, { id: 'file', label: 'Upload file', icon: Upload }]}
@@ -277,15 +289,12 @@ function PlanTab({ group }) {
           />
         )}
         {inputMode === 'file' && (
-          <div className="space-y-2">
-            <label className="text-sm text-muted">Transcript file</label>
-            <input
-              type="file"
-              accept=".docx,.txt,.md"
-              onChange={(e) => setFile(e.target.files[0])}
-              className="w-full text-sm text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border file:border-border file:bg-surface file:text-white file:text-xs file:cursor-pointer"
-            />
-          </div>
+          <input
+            type="file"
+            accept=".docx,.txt,.md"
+            onChange={(e) => setFile(e.target.files[0])}
+            className="w-full text-sm text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border file:border-border file:bg-surface file:text-white file:text-xs file:cursor-pointer"
+          />
         )}
       </div>
 
@@ -300,7 +309,14 @@ function PlanTab({ group }) {
           className="mt-6 bg-surface border border-border rounded-2xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-medium text-accent">Session Plan</span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-accent">Session Plan</span>
+              {sessionDate && (
+                <span className="text-xs text-muted flex items-center gap-1">
+                  <Calendar size={11} /> {sessionDate}
+                </span>
+              )}
+            </div>
             <button
               onClick={() => navigator.clipboard.writeText(plan)}
               className="flex items-center gap-1.5 text-xs text-muted hover:text-white transition-colors"
@@ -348,6 +364,11 @@ function ReportTab({ group }) {
     if (result) setReport(result.report)
   }
 
+  const sessionLabel = (s) => {
+    const date = s.session_date || s.created_at || s.id
+    return `${date} — has plan`
+  }
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-1">Improvement Report</h2>
@@ -359,7 +380,7 @@ function ReportTab({ group }) {
         <Select label="Session to compare against" value={selectedSession} onChange={(e) => setSelectedSession(e.target.value)}>
           <option value="">-- Select session --</option>
           {sessions.filter((s) => s.plan).map((s) => (
-            <option key={s.id} value={s.id}>{formatTs(s.id)} — has plan</option>
+            <option key={s.id} value={s.id}>{sessionLabel(s)}</option>
           ))}
           {!sessions.filter((s) => s.plan).length && (
             <option disabled>No sessions with plans yet — generate a plan first</option>
@@ -398,8 +419,7 @@ function ReportTab({ group }) {
         )}
       </div>
 
-      <ShinyButton onClick={generate} disabled={loading || !selectedSession} className="w-full py-3"
-        style={{ background: 'linear-gradient(135deg, #7C3AED, #06B6D4)' }}>
+      <ShinyButton onClick={generate} disabled={loading || !selectedSession} className="w-full py-3">
         {loading ? <><Spinner size={16} /> Generating report...</> : <><TrendingUp size={16} /> Generate Improvement Report</>}
       </ShinyButton>
 
@@ -456,15 +476,24 @@ function HistoryTab({ group }) {
               onClick={() => setExpanded(expanded === s.id ? null : s.id)}
               className="w-full flex items-center gap-3 p-4 text-left hover:bg-white/5 transition-colors"
             >
-              <div>
-                <p className="font-medium text-sm">{formatTs(s.id)}</p>
-                <div className="flex gap-1.5 mt-1">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="font-medium text-sm">
+                    {s.session_date || s.created_at || s.id}
+                  </p>
+                </div>
+                {s.session_date && s.created_at && (
+                  <p className="text-xs text-muted flex items-center gap-1">
+                    <Clock size={10} /> Created {s.created_at}
+                  </p>
+                )}
+                <div className="flex gap-1.5 mt-1.5">
                   {s.plan && <Badge color="indigo">Plan</Badge>}
                   {s.report && <Badge color="emerald">Report</Badge>}
                   {(s.transcript || s.lesson_transcript) && <Badge color="cyan">Transcript</Badge>}
                 </div>
               </div>
-              <div className="ml-auto text-muted">
+              <div className="text-muted">
                 {expanded === s.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </div>
             </button>
@@ -568,17 +597,29 @@ export default function Dashboard() {
             {/* Group header */}
             <div className="flex items-center gap-3 mb-8">
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                 style={{ background: `${typeColor(selected.session_type)}22`, border: `1px solid ${typeColor(selected.session_type)}44` }}
               >
                 <TypeIcon type={selected.session_type} size={18} />
               </div>
-              <div>
+              <div className="flex-1 min-w-0">
                 <h1 className="text-xl font-bold">{selected.name}</h1>
-                <p className="text-muted text-xs">
-                  {SESSION_TYPES.find((t) => t.id === selected.session_type)?.label}
-                  {selected.extra_context ? ` · ${selected.extra_context}` : ''}
-                </p>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-0.5">
+                  <p className="text-muted text-xs">
+                    {SESSION_TYPES.find((t) => t.id === selected.session_type)?.label}
+                    {selected.extra_context ? ` · ${selected.extra_context}` : ''}
+                  </p>
+                  {selected.next_session_date && (
+                    <p className="text-xs flex items-center gap-1" style={{ color: '#06B6D4' }}>
+                      <Calendar size={11} /> Next: {selected.next_session_date}
+                    </p>
+                  )}
+                  {selected.created_at && (
+                    <p className="text-xs text-muted flex items-center gap-1">
+                      <Clock size={11} /> Added {selected.created_at}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 

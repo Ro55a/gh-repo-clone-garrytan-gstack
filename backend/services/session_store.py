@@ -7,22 +7,34 @@ GROUPS_FILE = Path("groups.json")
 UPLOADS_DIR = Path("uploads")
 
 
+def _now_display() -> str:
+    return datetime.utcnow().strftime("%d %b %Y, %H:%M UTC")
+
+
 def list_groups() -> list[dict]:
     if not GROUPS_FILE.exists():
         return []
     return json.loads(GROUPS_FILE.read_text())
 
 
-def add_group(name: str, session_type: str = "tutoring", extra_context: str = "") -> dict:
+def add_group(name: str, session_type: str = "tutoring", extra_context: str = "", next_session_date: str = "") -> dict:
     groups = list_groups()
     existing = next((g for g in groups if g["name"] == name), None)
     if existing:
         existing["session_type"] = session_type or existing.get("session_type", "tutoring")
         existing["extra_context"] = extra_context or existing.get("extra_context", "")
+        if next_session_date:
+            existing["next_session_date"] = next_session_date
         GROUPS_FILE.write_text(json.dumps(groups, indent=2))
         return existing
 
-    group = {"name": name, "session_type": session_type, "extra_context": extra_context}
+    group = {
+        "name": name,
+        "session_type": session_type,
+        "extra_context": extra_context,
+        "next_session_date": next_session_date,
+        "created_at": _now_display(),
+    }
     groups.append(group)
     GROUPS_FILE.write_text(json.dumps(groups, indent=2))
 
@@ -51,7 +63,11 @@ def save_session(group: str, data: dict) -> str:
     session_id = datetime.utcnow().strftime("%Y%m%dT%H%M%S")
     path = SESSIONS_DIR / group / f"{session_id}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"timestamp": session_id, **data}, indent=2))
+    path.write_text(json.dumps({
+        "timestamp": session_id,
+        "created_at": _now_display(),
+        **data,
+    }, indent=2))
     return session_id
 
 
