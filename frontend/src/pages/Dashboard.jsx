@@ -1,31 +1,76 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import {
   BookOpen, Users, Briefcase, Heart, Plus, Trash2,
   Upload, FileText, Zap, TrendingUp, History,
-  Copy, ChevronDown, ChevronUp, ArrowLeft, Calendar, Clock
+  Copy, ChevronDown, ChevronUp, ArrowLeft, Calendar, Clock,
+  Sparkles, FolderOpen
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
 import { useAsync } from '../hooks/useApi'
 import ShinyButton from '../reactbits/ShinyButton'
-import GlowBorder from '../reactbits/GlowBorder'
 import AnimatedList from '../reactbits/AnimatedList'
-import TiltCard from '../reactbits/TiltCard'
 import { Alert, Badge, Modal, Input, Select, Textarea, Tabs, Spinner } from '../components/ui'
 
 const SESSION_TYPES = [
-  { id: 'tutoring', label: '1-on-1 Tutoring', icon: BookOpen, color: '#4F46E5' },
-  { id: 'group', label: 'Group Class', icon: Users, color: '#7C3AED' },
-  { id: 'meeting', label: 'Business Meeting', icon: Briefcase, color: '#06B6D4' },
-  { id: 'coaching', label: 'Coaching', icon: Heart, color: '#10B981' },
+  { id: 'tutoring', label: '1-on-1 Tutoring', icon: BookOpen, color: '#4F46E5', gradient: 'from-indigo-500 to-violet-600' },
+  { id: 'group', label: 'Group Class', icon: Users, color: '#7C3AED', gradient: 'from-violet-500 to-purple-700' },
+  { id: 'meeting', label: 'Business Meeting', icon: Briefcase, color: '#06B6D4', gradient: 'from-cyan-500 to-sky-600' },
+  { id: 'coaching', label: 'Coaching', icon: Heart, color: '#10B981', gradient: 'from-emerald-500 to-teal-600' },
 ]
 
 const typeColor = (t) => SESSION_TYPES.find((s) => s.id === t)?.color || '#4F46E5'
+const typeGradient = (t) => SESSION_TYPES.find((s) => s.id === t)?.gradient || 'from-indigo-500 to-violet-600'
 const TypeIcon = ({ type, size = 16 }) => {
   const T = SESSION_TYPES.find((s) => s.id === type)
   return T ? <T.icon size={size} style={{ color: T.color }} /> : <BookOpen size={size} />
+}
+
+// ─── Session Type Grid Picker ──────────────────────────────────────────────────
+
+function SessionTypePicker({ value, onChange }) {
+  return (
+    <div>
+      <p className="text-xs text-muted mb-2 font-medium uppercase tracking-widest">Session Type</p>
+      <div className="grid grid-cols-2 gap-2">
+        {SESSION_TYPES.map((t) => {
+          const active = value === t.id
+          return (
+            <motion.button
+              key={t.id}
+              onClick={() => onChange(t.id)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              className={`relative flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all overflow-hidden ${
+                active
+                  ? 'border-transparent text-white'
+                  : 'border-border bg-surface/50 text-muted hover:text-white hover:border-white/10'
+              }`}
+              style={active ? { background: `linear-gradient(135deg, ${t.color}33, ${t.color}11)`, borderColor: `${t.color}55` } : {}}
+            >
+              {active && (
+                <motion.div
+                  layoutId="type-active"
+                  className="absolute inset-0 rounded-xl"
+                  style={{ background: `linear-gradient(135deg, ${t.color}22, ${t.color}08)`, border: `1px solid ${t.color}44` }}
+                />
+              )}
+              <div
+                className="relative z-10 w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                style={{ background: active ? `${t.color}33` : 'rgba(255,255,255,0.05)' }}
+              >
+                <t.icon size={14} style={{ color: active ? t.color : undefined }} />
+              </div>
+              <span className="relative z-10 text-xs font-medium leading-tight">{t.label}</span>
+              {active && <div className="absolute top-2 right-2 z-10 w-1.5 h-1.5 rounded-full" style={{ background: t.color }} />}
+            </motion.button>
+          )
+        })}
+      </div>
+    </div>
+  )
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
@@ -33,54 +78,92 @@ const TypeIcon = ({ type, size = 16 }) => {
 function Sidebar({ groups, selected, onSelect, onAddGroup }) {
   const navigate = useNavigate()
   return (
-    <aside className="w-64 shrink-0 bg-sidebar border-r border-border flex flex-col h-screen sticky top-0">
-      <div className="p-4 border-b border-border flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-violet flex items-center justify-center">
-            <Zap size={14} className="text-white" />
+    <aside className="w-64 shrink-0 flex flex-col h-screen sticky top-0 glass-strong border-r border-white/5">
+      {/* gradient top border */}
+      <div className="h-0.5 w-full" style={{ background: 'linear-gradient(90deg, #4F46E5, #7C3AED, #06B6D4)' }} />
+
+      <div className="p-4 border-b border-white/5 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-violet flex items-center justify-center shadow-lg" style={{ boxShadow: '0 0 16px rgba(79,70,229,0.5)' }}>
+            <Zap size={15} className="text-white" />
           </div>
-          <span className="font-bold">SessionIQ</span>
+          <span className="font-bold text-sm tracking-wide">SessionIQ</span>
         </div>
-        <button onClick={() => navigate('/')} className="text-muted hover:text-white transition-colors" title="Home">
-          <ArrowLeft size={16} />
-        </button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => navigate('/')}
+          className="text-muted hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5"
+          title="Home"
+        >
+          <ArrowLeft size={15} />
+        </motion.button>
       </div>
 
       <div className="p-3">
-        <GlowBorder onClick={onAddGroup} className="w-full justify-center text-sm py-2.5">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={onAddGroup}
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all"
+          style={{
+            background: 'linear-gradient(135deg, rgba(79,70,229,0.3), rgba(124,58,237,0.2))',
+            border: '1px solid rgba(79,70,229,0.4)',
+            color: 'rgba(255,255,255,0.9)',
+          }}
+        >
           <Plus size={15} /> New Group
-        </GlowBorder>
+        </motion.button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-2 space-y-1">
-        <p className="px-2 py-1 text-xs text-muted uppercase tracking-widest font-medium">Groups</p>
+      <div className="flex-1 overflow-y-auto p-2 space-y-0.5">
+        <p className="px-3 py-2 text-xs text-muted/60 uppercase tracking-widest font-semibold">Groups</p>
         <AnimatedList
           items={groups}
           keyFn={(g) => g.name}
-          renderItem={(g) => (
-            <button
-              onClick={() => onSelect(g)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all text-left ${
-                selected?.name === g.name
-                  ? 'bg-primary/20 text-white border border-primary/30'
-                  : 'text-muted hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <TypeIcon type={g.session_type} size={15} />
-              <div className="flex-1 min-w-0">
-                <p className="font-medium truncate">{g.name}</p>
-                {g.next_session_date && (
-                  <p className="text-xs text-muted truncate flex items-center gap-1 mt-0.5">
-                    <Calendar size={10} /> {g.next_session_date}
-                  </p>
+          renderItem={(g) => {
+            const active = selected?.name === g.name
+            const color = typeColor(g.session_type)
+            return (
+              <button
+                onClick={() => onSelect(g)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all text-left relative overflow-hidden group`}
+              >
+                {active && (
+                  <motion.div
+                    layoutId="sidebar-active"
+                    className="absolute inset-0 rounded-xl"
+                    style={{ background: `linear-gradient(135deg, ${color}22, ${color}0a)`, border: `1px solid ${color}33` }}
+                  />
                 )}
-              </div>
-            </button>
-          )}
+                {active && (
+                  <div className="absolute left-0 top-2 bottom-2 w-0.5 rounded-r" style={{ background: color }} />
+                )}
+                {!active && (
+                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'rgba(255,255,255,0.03)' }} />
+                )}
+                <div className="relative z-10 shrink-0" style={{ color: active ? color : undefined }}>
+                  <TypeIcon type={g.session_type} size={15} />
+                </div>
+                <div className="relative z-10 flex-1 min-w-0">
+                  <p className={`font-medium truncate text-xs ${active ? 'text-white' : 'text-muted group-hover:text-white'}`}>{g.name}</p>
+                  {g.next_session_date && (
+                    <p className="text-xs text-muted/60 truncate flex items-center gap-1 mt-0.5">
+                      <Calendar size={9} /> {g.next_session_date}
+                    </p>
+                  )}
+                </div>
+              </button>
+            )
+          }}
         />
         {!groups.length && (
-          <p className="px-3 py-4 text-xs text-muted text-center">No groups yet. Add one above.</p>
+          <p className="px-3 py-6 text-xs text-muted/50 text-center">No groups yet.<br />Add one above.</p>
         )}
+      </div>
+
+      <div className="p-4 border-t border-white/5">
+        <p className="text-xs text-muted/40 text-center">Powered by Claude AI</p>
       </div>
     </aside>
   )
@@ -111,11 +194,7 @@ function AddGroupModal({ open, onClose, onCreated }) {
           placeholder="e.g. Emma Cohen, Marketing Team, Friday Group..."
           onKeyDown={(e) => e.key === 'Enter' && submit()}
         />
-        <Select label="Session Type" value={type} onChange={(e) => setType(e.target.value)}>
-          {SESSION_TYPES.map((t) => (
-            <option key={t.id} value={t.id}>{t.label}</option>
-          ))}
-        </Select>
+        <SessionTypePicker value={type} onChange={setType} />
         <Input
           label="Next session date (optional)"
           value={nextDate}
@@ -141,12 +220,62 @@ function AddGroupModal({ open, onClose, onCreated }) {
   )
 }
 
+// ─── Upload Zone ───────────────────────────────────────────────────────────────
+
+function UploadZone({ onUpload }) {
+  const [dragOver, setDragOver] = useState(false)
+  const angleRef = useRef(0)
+  const [angle, setAngle] = useState(0)
+
+  useEffect(() => {
+    if (!dragOver) return
+    const id = setInterval(() => {
+      angleRef.current = (angleRef.current + 3) % 360
+      setAngle(angleRef.current)
+    }, 16)
+    return () => clearInterval(id)
+  }, [dragOver])
+
+  return (
+    <motion.label
+      onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+      onDragLeave={() => setDragOver(false)}
+      onDrop={(e) => { e.preventDefault(); setDragOver(false); onUpload(e.dataTransfer.files) }}
+      animate={{ scale: dragOver ? 1.01 : 1 }}
+      className="flex flex-col items-center justify-center gap-3 rounded-2xl p-10 cursor-pointer mb-6 transition-all relative overflow-hidden"
+      style={dragOver ? {
+        background: `conic-gradient(from ${angle}deg, #4F46E5, #7C3AED, #06B6D4, #4F46E5) border-box`,
+        border: '1px solid transparent',
+        padding: '1px',
+      } : {
+        border: '2px dashed rgba(255,255,255,0.1)',
+        background: 'rgba(255,255,255,0.02)',
+      }}
+    >
+      <div className={`flex flex-col items-center justify-center gap-3 w-full rounded-2xl p-9 ${dragOver ? 'bg-bg' : ''}`}>
+        <motion.div
+          animate={{ rotate: dragOver ? 360 : 0, scale: dragOver ? 1.15 : 1 }}
+          transition={{ duration: dragOver ? 1 : 0.3, repeat: dragOver ? Infinity : 0, ease: 'linear' }}
+          className="w-12 h-12 rounded-xl flex items-center justify-center"
+          style={{ background: 'rgba(79,70,229,0.2)', border: '1px solid rgba(79,70,229,0.3)' }}
+        >
+          <Upload size={22} className="text-primary" />
+        </motion.div>
+        <div className="text-center">
+          <p className="font-medium mb-1 text-sm">{dragOver ? 'Drop to upload' : 'Drop files here or click to upload'}</p>
+          <p className="text-muted text-xs">DOCX, PDF, TXT, Markdown</p>
+        </div>
+        <input type="file" className="hidden" multiple accept=".docx,.txt,.md,.pdf" onChange={(e) => onUpload(e.target.files)} />
+      </div>
+    </motion.label>
+  )
+}
+
 // ─── Materials Tab ─────────────────────────────────────────────────────────────
 
 function MaterialsTab({ group }) {
   const [files, setFiles] = useState([])
   const [alert, setAlert] = useState(null)
-  const [dragOver, setDragOver] = useState(false)
   const { loading, run } = useAsync()
 
   const load = useCallback(async () => {
@@ -161,7 +290,7 @@ function MaterialsTab({ group }) {
       const allowed = ['.docx', '.txt', '.md', '.pdf']
       const ext = '.' + file.name.split('.').pop().toLowerCase()
       if (!allowed.includes(ext)) {
-        setAlert({ type: 'error', msg: `${file.name}: unsupported type. Use DOCX, TXT, or MD.` })
+        setAlert({ type: 'error', msg: `${file.name}: unsupported type. Use DOCX, TXT, PDF, or MD.` })
         return
       }
     }
@@ -177,49 +306,55 @@ function MaterialsTab({ group }) {
     load()
   }
 
+  const extColor = (f) => {
+    const ext = f.split('.').pop().toLowerCase()
+    if (ext === 'pdf') return '#FF6B6B'
+    if (ext === 'docx') return '#4F46E5'
+    if (ext === 'md') return '#06B6D4'
+    return '#6B7280'
+  }
+
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-1">Reference Materials</h2>
-      <p className="text-muted text-sm mb-6">Upload documents, notes, or curriculum files for this group. Supports DOCX, TXT, and Markdown.</p>
+      <h2 className="text-xl font-bold mb-1">Reference Materials</h2>
+      <p className="text-muted text-sm mb-6">Upload documents, notes, or curriculum files. Supports DOCX, PDF, TXT, Markdown.</p>
 
       <AnimatePresence>{alert && <Alert message={alert.msg} type={alert.type} onDismiss={() => setAlert(null)} />}</AnimatePresence>
 
-      <motion.label
-        onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => { e.preventDefault(); setDragOver(false); upload(e.dataTransfer.files) }}
-        animate={{ borderColor: dragOver ? '#4F46E5' : '#2A2A3A', background: dragOver ? 'rgba(79,70,229,0.08)' : 'rgba(255,255,255,0.02)' }}
-        className="flex flex-col items-center justify-center gap-3 border-2 border-dashed rounded-2xl p-10 cursor-pointer transition-colors mb-6"
-      >
-        <div className="w-12 h-12 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center">
-          <Upload size={22} className="text-primary" />
-        </div>
-        <div className="text-center">
-          <p className="font-medium mb-1">Drop files here or click to upload</p>
-          <p className="text-muted text-sm">DOCX, PDF, TXT, Markdown</p>
-        </div>
-        <input type="file" className="hidden" multiple accept=".docx,.txt,.md,.pdf" onChange={(e) => upload(e.target.files)} />
-      </motion.label>
+      <UploadZone onUpload={upload} />
 
       {loading && <div className="flex justify-center py-4"><Spinner /></div>}
+
       <AnimatedList
         items={files}
         keyFn={(f) => f}
         renderItem={(f) => (
-          <div className="flex items-center gap-3 p-3 bg-surface border border-border rounded-xl mb-2 group">
-            <FileText size={16} className="text-muted shrink-0" />
-            <span className="flex-1 text-sm truncate">{f}</span>
-            <button
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-3 p-3.5 glass-card rounded-xl mb-2 group hover:border-white/10 transition-colors"
+          >
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${extColor(f)}22`, border: `1px solid ${extColor(f)}44` }}>
+              <FileText size={14} style={{ color: extColor(f) }} />
+            </div>
+            <span className="flex-1 text-sm truncate text-white/80">{f}</span>
+            <span className="text-xs font-mono uppercase text-muted/50 mr-1">{f.split('.').pop()}</span>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => remove(f)}
               className="text-muted hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
             >
-              <Trash2 size={15} />
-            </button>
-          </div>
+              <Trash2 size={14} />
+            </motion.button>
+          </motion.div>
         )}
       />
       {!files.length && !loading && (
-        <p className="text-center text-muted text-sm py-4">No files uploaded yet.</p>
+        <div className="text-center py-12">
+          <FolderOpen size={32} className="mx-auto text-muted/30 mb-3" />
+          <p className="text-muted text-sm">No files uploaded yet.</p>
+        </div>
       )}
     </div>
   )
@@ -257,23 +392,20 @@ function PlanTab({ group }) {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-1">Generate Session Plan</h2>
-      <p className="text-muted text-sm mb-6">Paste your last Granola transcript and Claude will generate a structured plan for your next session.</p>
+      <h2 className="text-xl font-bold mb-1">Generate Session Plan</h2>
+      <p className="text-muted text-sm mb-6">Paste your last transcript and Claude will generate a structured plan for your next session.</p>
 
       <AnimatePresence>{(error || alert) && <Alert message={error || alert?.msg} type={alert?.type || 'error'} onDismiss={() => setAlert(null)} />}</AnimatePresence>
 
-      <div className="space-y-4 mb-6">
-        <div className="grid grid-cols-2 gap-3">
-          <Select label="Session type" value={sessionType} onChange={(e) => setSessionType(e.target.value)}>
-            {SESSION_TYPES.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
-          </Select>
-          <Input
-            label="Next session date (optional)"
-            value={sessionDate}
-            onChange={(e) => setSessionDate(e.target.value)}
-            placeholder="e.g. 20 June 2026"
-          />
-        </div>
+      <div className="space-y-5 mb-6">
+        <SessionTypePicker value={sessionType} onChange={setSessionType} />
+
+        <Input
+          label="Next session date (optional)"
+          value={sessionDate}
+          onChange={(e) => setSessionDate(e.target.value)}
+          placeholder="e.g. 20 June 2026"
+        />
 
         <Tabs
           tabs={[{ id: 'paste', label: 'Paste transcript', icon: FileText }, { id: 'file', label: 'Upload file', icon: Upload }]}
@@ -285,7 +417,7 @@ function PlanTab({ group }) {
           <Textarea
             value={transcript}
             onChange={(e) => setTranscript(e.target.value)}
-            placeholder="Paste your Granola transcript here... (leave blank for first session)"
+            placeholder="Paste your transcript here... (leave blank for first session)"
           />
         )}
         {inputMode === 'file' && (
@@ -298,37 +430,54 @@ function PlanTab({ group }) {
         )}
       </div>
 
-      <ShinyButton onClick={generate} disabled={loading} className="w-full py-3">
-        {loading ? <><Spinner size={16} /> Generating plan...</> : <><Zap size={16} /> Generate Session Plan</>}
-      </ShinyButton>
+      <motion.button
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={generate}
+        disabled={loading}
+        className="w-full py-3.5 rounded-2xl font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50 transition-all"
+        style={{
+          background: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
+          boxShadow: loading ? 'none' : '0 8px 32px rgba(79,70,229,0.4)',
+        }}
+      >
+        {loading ? <><Spinner size={16} /> Generating plan...</> : <><Sparkles size={16} /> Generate Session Plan</>}
+      </motion.button>
 
-      {plan && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-6 bg-surface border border-border rounded-2xl p-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-accent">Session Plan</span>
-              {sessionDate && (
-                <span className="text-xs text-muted flex items-center gap-1">
-                  <Calendar size={11} /> {sessionDate}
-                </span>
-              )}
+      <AnimatePresence>
+        {plan && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mt-6 gradient-border overflow-hidden"
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span className="text-sm font-semibold text-accent">Session Plan</span>
+                  {sessionDate && (
+                    <span className="text-xs text-muted flex items-center gap-1 ml-1">
+                      <Calendar size={11} /> {sessionDate}
+                    </span>
+                  )}
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => navigator.clipboard.writeText(plan)}
+                  className="flex items-center gap-1.5 text-xs text-muted hover:text-white transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/5"
+                >
+                  <Copy size={12} /> Copy
+                </motion.button>
+              </div>
+              <div className="prose-dark max-h-96 overflow-y-auto pr-2">
+                <ReactMarkdown>{plan}</ReactMarkdown>
+              </div>
             </div>
-            <button
-              onClick={() => navigator.clipboard.writeText(plan)}
-              className="flex items-center gap-1.5 text-xs text-muted hover:text-white transition-colors"
-            >
-              <Copy size={13} /> Copy
-            </button>
-          </div>
-          <div className="prose-dark max-h-96 overflow-y-auto">
-            <ReactMarkdown>{plan}</ReactMarkdown>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -371,8 +520,8 @@ function ReportTab({ group }) {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-1">Improvement Report</h2>
-      <p className="text-muted text-sm mb-6">After your session, provide the transcript and get honest feedback on how it went and how to improve.</p>
+      <h2 className="text-xl font-bold mb-1">Improvement Report</h2>
+      <p className="text-muted text-sm mb-6">Provide a transcript from a completed session and get honest, detailed feedback on how to improve.</p>
 
       <AnimatePresence>{(error || alert) && <Alert message={error || alert?.msg} type={alert?.type || 'error'} onDismiss={() => setAlert(null)} />}</AnimatePresence>
 
@@ -419,30 +568,50 @@ function ReportTab({ group }) {
         )}
       </div>
 
-      <ShinyButton onClick={generate} disabled={loading || !selectedSession} className="w-full py-3">
+      <motion.button
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={generate}
+        disabled={loading || !selectedSession}
+        className="w-full py-3.5 rounded-2xl font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50 transition-all"
+        style={{
+          background: 'linear-gradient(135deg, #059669, #0d9488)',
+          boxShadow: (!loading && selectedSession) ? '0 8px 32px rgba(16,185,129,0.3)' : 'none',
+        }}
+      >
         {loading ? <><Spinner size={16} /> Generating report...</> : <><TrendingUp size={16} /> Generate Improvement Report</>}
-      </ShinyButton>
+      </motion.button>
 
-      {report && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-6 bg-surface border border-border rounded-2xl p-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-medium" style={{ color: '#10B981' }}>Improvement Report</span>
-            <button
-              onClick={() => navigator.clipboard.writeText(report)}
-              className="flex items-center gap-1.5 text-xs text-muted hover:text-white transition-colors"
-            >
-              <Copy size={13} /> Copy
-            </button>
-          </div>
-          <div className="prose-dark max-h-96 overflow-y-auto">
-            <ReactMarkdown>{report}</ReactMarkdown>
-          </div>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {report && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mt-6 rounded-2xl overflow-hidden"
+            style={{ border: '1px solid rgba(16,185,129,0.3)', background: 'rgba(16,185,129,0.05)' }}
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#10B981' }} />
+                  <span className="text-sm font-semibold" style={{ color: '#10B981' }}>Improvement Report</span>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => navigator.clipboard.writeText(report)}
+                  className="flex items-center gap-1.5 text-xs text-muted hover:text-white transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/5"
+                >
+                  <Copy size={12} /> Copy
+                </motion.button>
+              </div>
+              <div className="prose-dark max-h-96 overflow-y-auto pr-2">
+                <ReactMarkdown>{report}</ReactMarkdown>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -459,43 +628,54 @@ function HistoryTab({ group }) {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-1">Session History</h2>
+      <h2 className="text-xl font-bold mb-1">Session History</h2>
       <p className="text-muted text-sm mb-6">All past sessions with their plans, transcripts, and reports.</p>
 
-      {!sessions.length && <p className="text-center text-muted text-sm py-8">No sessions yet.</p>}
+      {!sessions.length && (
+        <div className="text-center py-16">
+          <History size={32} className="mx-auto text-muted/30 mb-3" />
+          <p className="text-muted text-sm">No sessions yet.</p>
+        </div>
+      )}
 
       <div className="space-y-3">
-        {sessions.map((s) => (
+        {sessions.map((s, i) => (
           <motion.div
             key={s.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-surface border border-border rounded-2xl overflow-hidden"
+            transition={{ delay: i * 0.04 }}
+            className="glass-card rounded-2xl overflow-hidden hover:border-white/10 transition-colors"
           >
             <button
               onClick={() => setExpanded(expanded === s.id ? null : s.id)}
-              className="w-full flex items-center gap-3 p-4 text-left hover:bg-white/5 transition-colors"
+              className="w-full flex items-center gap-3 p-4 text-left hover:bg-white/3 transition-colors"
             >
+              <div className="w-9 h-9 rounded-xl glass flex items-center justify-center shrink-0">
+                <Calendar size={15} className="text-muted" />
+              </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <p className="font-medium text-sm">
-                    {s.session_date || s.created_at || s.id}
-                  </p>
-                </div>
+                <p className="font-semibold text-sm">
+                  {s.session_date || s.created_at || s.id}
+                </p>
                 {s.session_date && s.created_at && (
-                  <p className="text-xs text-muted flex items-center gap-1">
-                    <Clock size={10} /> Created {s.created_at}
+                  <p className="text-xs text-muted flex items-center gap-1 mt-0.5">
+                    <Clock size={9} /> Created {s.created_at}
                   </p>
                 )}
-                <div className="flex gap-1.5 mt-1.5">
+                <div className="flex gap-1.5 mt-2">
                   {s.plan && <Badge color="indigo">Plan</Badge>}
                   {s.report && <Badge color="emerald">Report</Badge>}
                   {(s.transcript || s.lesson_transcript) && <Badge color="cyan">Transcript</Badge>}
                 </div>
               </div>
-              <div className="text-muted">
-                {expanded === s.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-              </div>
+              <motion.div
+                animate={{ rotate: expanded === s.id ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-muted"
+              >
+                <ChevronDown size={16} />
+              </motion.div>
             </button>
 
             <AnimatePresence>
@@ -504,29 +684,34 @@ function HistoryTab({ group }) {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="border-t border-border overflow-hidden"
+                  transition={{ duration: 0.2 }}
+                  className="border-t border-white/5 overflow-hidden"
                 >
-                  <div className="p-4 space-y-4">
+                  <div className="p-5 space-y-5">
                     {s.plan && (
                       <div>
-                        <p className="text-xs font-semibold text-accent mb-2 uppercase tracking-wider">Lesson Plan</p>
-                        <div className="prose-dark max-h-64 overflow-y-auto bg-bg rounded-xl p-4 text-sm">
+                        <p className="text-xs font-bold text-accent mb-3 uppercase tracking-widest flex items-center gap-1.5">
+                          <Zap size={11} /> Session Plan
+                        </p>
+                        <div className="prose-dark max-h-64 overflow-y-auto bg-bg/50 rounded-xl p-4 text-sm border border-accent/10">
                           <ReactMarkdown>{s.plan}</ReactMarkdown>
                         </div>
                       </div>
                     )}
                     {s.report && (
                       <div>
-                        <p className="text-xs font-semibold mb-2 uppercase tracking-wider" style={{ color: '#10B981' }}>Improvement Report</p>
-                        <div className="prose-dark max-h-64 overflow-y-auto bg-bg rounded-xl p-4 text-sm">
+                        <p className="text-xs font-bold mb-3 uppercase tracking-widest flex items-center gap-1.5" style={{ color: '#10B981' }}>
+                          <TrendingUp size={11} /> Improvement Report
+                        </p>
+                        <div className="prose-dark max-h-64 overflow-y-auto bg-bg/50 rounded-xl p-4 text-sm" style={{ border: '1px solid rgba(16,185,129,0.15)' }}>
                           <ReactMarkdown>{s.report}</ReactMarkdown>
                         </div>
                       </div>
                     )}
                     {(s.transcript || s.lesson_transcript) && (
                       <div>
-                        <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wider">Transcript</p>
-                        <pre className="max-h-48 overflow-y-auto bg-bg rounded-xl p-4 text-xs text-muted whitespace-pre-wrap">
+                        <p className="text-xs font-bold text-muted mb-3 uppercase tracking-widest">Transcript</p>
+                        <pre className="max-h-48 overflow-y-auto bg-bg/50 rounded-xl p-4 text-xs text-muted whitespace-pre-wrap border border-white/5">
                           {s.transcript || s.lesson_transcript}
                         </pre>
                       </div>
@@ -571,6 +756,8 @@ export default function Dashboard() {
     setTab('materials')
   }
 
+  const color = selected ? typeColor(selected.session_type) : '#4F46E5'
+
   return (
     <div className="flex min-h-screen bg-bg">
       <Sidebar
@@ -580,50 +767,104 @@ export default function Dashboard() {
         onAddGroup={() => setAddOpen(true)}
       />
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto relative">
+        {/* Subtle mesh background */}
+        <div className="absolute inset-0 pointer-events-none opacity-30" style={{ background: 'radial-gradient(at 80% 0%, rgba(79,70,229,0.15) 0px, transparent 50%), radial-gradient(at 0% 100%, rgba(6,182,212,0.1) 0px, transparent 50%)' }} />
+
         {!selected ? (
-          <div className="flex flex-col items-center justify-center h-full min-h-screen text-center p-10">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-violet flex items-center justify-center mb-5">
-              <Zap size={28} className="text-white" />
-            </div>
-            <h2 className="text-2xl font-bold mb-2">Welcome to SessionIQ</h2>
-            <p className="text-muted text-sm max-w-xs mb-6">Add your first group or participant to get started.</p>
-            <ShinyButton onClick={() => setAddOpen(true)}>
-              <Plus size={16} /> Add Group
-            </ShinyButton>
+          <div className="relative flex flex-col items-center justify-center h-full min-h-screen text-center p-10">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="w-20 h-20 rounded-3xl bg-gradient-to-br from-primary to-violet flex items-center justify-center mb-6 shadow-2xl"
+              style={{ boxShadow: '0 0 60px rgba(79,70,229,0.4)' }}
+            >
+              <Zap size={32} className="text-white" />
+            </motion.div>
+            <motion.h2
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl font-black mb-3"
+            >
+              Welcome to SessionIQ
+            </motion.h2>
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15 }}
+              className="text-muted text-sm max-w-xs mb-8"
+            >
+              Add your first group or participant to get started with AI-powered session planning.
+            </motion.p>
+            <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
+              <ShinyButton onClick={() => setAddOpen(true)}>
+                <Plus size={16} /> Add Group
+              </ShinyButton>
+            </motion.div>
           </div>
         ) : (
-          <div className="max-w-3xl mx-auto p-8">
+          <div className="relative max-w-3xl mx-auto p-8">
             {/* Group header */}
-            <div className="flex items-center gap-3 mb-8">
+            <motion.div
+              key={selected.name}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-4 mb-8 p-5 glass-card rounded-2xl"
+            >
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: `${typeColor(selected.session_type)}22`, border: `1px solid ${typeColor(selected.session_type)}44` }}
+                className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                style={{ background: `linear-gradient(135deg, ${color}33, ${color}11)`, border: `1px solid ${color}44` }}
               >
-                <TypeIcon type={selected.session_type} size={18} />
+                <TypeIcon type={selected.session_type} size={20} />
               </div>
               <div className="flex-1 min-w-0">
-                <h1 className="text-xl font-bold">{selected.name}</h1>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-0.5">
-                  <p className="text-muted text-xs">
+                <h1 className="text-xl font-black">{selected.name}</h1>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                  <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: `${color}22`, color, border: `1px solid ${color}33` }}>
                     {SESSION_TYPES.find((t) => t.id === selected.session_type)?.label}
-                    {selected.extra_context ? ` · ${selected.extra_context}` : ''}
-                  </p>
+                  </span>
+                  {selected.extra_context && (
+                    <p className="text-muted text-xs truncate max-w-xs">{selected.extra_context}</p>
+                  )}
                   {selected.next_session_date && (
                     <p className="text-xs flex items-center gap-1" style={{ color: '#06B6D4' }}>
                       <Calendar size={11} /> Next: {selected.next_session_date}
                     </p>
                   )}
                   {selected.created_at && (
-                    <p className="text-xs text-muted flex items-center gap-1">
-                      <Clock size={11} /> Added {selected.created_at}
+                    <p className="text-xs text-muted/50 flex items-center gap-1">
+                      <Clock size={10} /> Added {selected.created_at}
                     </p>
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <Tabs tabs={MAIN_TABS} active={tab} onChange={setTab} />
+            {/* Pill tab bar */}
+            <div className="tab-pill mb-8">
+              {MAIN_TABS.map((t) => {
+                const active = tab === t.id
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => setTab(t.id)}
+                    className="relative flex items-center gap-1.5 px-4 py-2 rounded-[9px] text-sm font-medium transition-all z-10"
+                    style={{ color: active ? 'white' : 'rgba(255,255,255,0.4)' }}
+                  >
+                    {active && (
+                      <motion.div
+                        layoutId="tab-indicator"
+                        className="absolute inset-0 rounded-[9px]"
+                        style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}
+                      />
+                    )}
+                    <t.icon size={14} className="relative z-10" />
+                    <span className="relative z-10">{t.label}</span>
+                  </button>
+                )
+              })}
+            </div>
 
             <AnimatePresence mode="wait">
               <motion.div
@@ -631,7 +872,7 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.18 }}
               >
                 {tab === 'materials' && <MaterialsTab group={selected} />}
                 {tab === 'plan' && <PlanTab group={selected} />}
