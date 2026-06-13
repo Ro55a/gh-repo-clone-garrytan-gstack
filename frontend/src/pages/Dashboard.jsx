@@ -158,7 +158,7 @@ function MaterialsTab({ group }) {
 
   const upload = async (fileList) => {
     for (const file of fileList) {
-      const allowed = ['.docx', '.txt', '.md']
+      const allowed = ['.docx', '.txt', '.md', '.pdf']
       const ext = '.' + file.name.split('.').pop().toLowerCase()
       if (!allowed.includes(ext)) {
         setAlert({ type: 'error', msg: `${file.name}: unsupported type. Use DOCX, TXT, or MD.` })
@@ -196,9 +196,9 @@ function MaterialsTab({ group }) {
         </div>
         <div className="text-center">
           <p className="font-medium mb-1">Drop files here or click to upload</p>
-          <p className="text-muted text-sm">DOCX, TXT, Markdown</p>
+          <p className="text-muted text-sm">DOCX, PDF, TXT, Markdown</p>
         </div>
-        <input type="file" className="hidden" multiple accept=".docx,.txt,.md" onChange={(e) => upload(e.target.files)} />
+        <input type="file" className="hidden" multiple accept=".docx,.txt,.md,.pdf" onChange={(e) => upload(e.target.files)} />
       </motion.label>
 
       {loading && <div className="flex justify-center py-4"><Spinner /></div>}
@@ -291,7 +291,7 @@ function PlanTab({ group }) {
         {inputMode === 'file' && (
           <input
             type="file"
-            accept=".docx,.txt,.md"
+            accept=".docx,.txt,.md,.pdf"
             onChange={(e) => setFile(e.target.files[0])}
             className="w-full text-sm text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border file:border-border file:bg-surface file:text-white file:text-xs file:cursor-pointer"
           />
@@ -407,7 +407,7 @@ function ReportTab({ group }) {
         {inputMode === 'file' && (
           <input
             type="file"
-            accept=".docx,.txt,.md"
+            accept=".docx,.txt,.md,.pdf"
             onChange={(e) => setFile(e.target.files[0])}
             className="w-full text-sm text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border file:border-border file:bg-surface file:text-white file:text-xs file:cursor-pointer"
           />

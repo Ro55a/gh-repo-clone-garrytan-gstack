@@ -13,4 +13,9 @@ def extract_text(file_path: str) -> str:
     if suffix in (".txt", ".md"):
         return path.read_text(encoding="utf-8")
 
+    if suffix == ".pdf":
+        import fitz  # pymupdf
+        doc = fitz.open(file_path)
+        return "\n".join(page.get_text() for page in doc)
+
     raise ValueError(f"Unsupported file type: {suffix}")

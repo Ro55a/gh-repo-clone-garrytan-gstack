@@ -52,7 +52,7 @@ def get_materials(group: str):
 
 @app.post("/api/materials/{group}")
 async def upload_material(group: str, file: UploadFile = File(...)):
-    allowed = {".docx", ".txt", ".md"}
+    allowed = {".docx", ".txt", ".md", ".pdf"}
     suffix = Path(file.filename).suffix.lower()
     if suffix not in allowed:
         raise HTTPException(400, f"Unsupported file type. Allowed: {', '.join(allowed)}")
