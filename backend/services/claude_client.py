@@ -94,25 +94,115 @@ SESSION PLAN THAT WAS FOLLOWED:
 TRANSCRIPT OF THE SESSION:
 {session_transcript}
 
-Please give me honest feedback on how this session went and how I can improve."""
+Please give me honest feedback on how this session went, covering both how I can improve as a tutor and how the student can improve in their learning."""
 
     message = _get_client().messages.create(
         model="claude-sonnet-4-6",
         max_tokens=2048,
-        system=f"""You are giving honest, constructive feedback to someone who just ran a {ctx['label']}.
+        system=f"""You are giving honest, constructive feedback on a {ctx['label']}.
 
-Analyze the session transcript against the plan and write a personal improvement report addressed directly to the person (use "you").
+Analyze the session transcript against the plan and write a report with two clear parts:
 
+PART 1 — TUTOR IMPROVEMENT (addressed directly to the tutor using "you"):
 Focus on: {ctx['report_focus']}.
 
-Structure the report with:
-## What Went Well
-## What to Try Differently
-## Key Observations
-## Specific Suggestions for Next Session
-## Overall Reflection
+Structure Part 1 with:
+## What You Did Well
+## What You Can Do Differently
+## Specific Suggestions for Your Next Session
 
-Be warm but honest. Give specific, actionable advice tied to what actually happened in the transcript.""",
+PART 2 — STUDENT PROGRESS & DEVELOPMENT:
+Focus on: what the student understood well, where they struggled, specific areas and skills they need to practice, and recommended next steps for their learning.
+
+Structure Part 2 with:
+## Student Strengths Observed
+## Areas the Student Needs to Work On
+## Recommended Practice for the Student
+## Overall Student Progress
+
+Be warm but honest. Give specific, actionable feedback tied to what actually happened in the transcript.""",
         messages=[{"role": "user", "content": user_content}],
     )
     return message.content[0].text
+
+
+def stream_session_plan(materials_text, last_transcript, group_name, session_type="tutoring", extra_context=""):
+    ctx = SESSION_TYPE_CONTEXTS.get(session_type, SESSION_TYPE_CONTEXTS["tutoring"])
+    user_content = f"""GROUP/PARTICIPANT: {group_name}
+SESSION TYPE: {ctx['label']}
+{f'ADDITIONAL CONTEXT: {extra_context}' if extra_context else ''}
+
+REFERENCE MATERIALS:
+{materials_text or '(No materials uploaded yet)'}
+
+TRANSCRIPT OF LAST SESSION:
+{last_transcript or '(No previous session transcript — this may be the first session)'}
+
+Please generate a plan for the next session."""
+
+    with _get_client().messages.stream(
+        model="claude-sonnet-4-6",
+        max_tokens=2048,
+        system=f"""You are an expert planning assistant helping someone prepare for their next {ctx['label']}.
+
+Based on the reference materials and the transcript of the last session, generate a practical, concrete session plan.
+
+Focus on: {ctx['plan_focus']}.
+
+Structure your plan with these sections:
+## Session Goals
+## Review / Follow-up from Last Session
+## Main Content / Agenda
+## Activities & Timing
+## Key Points to Watch For
+## Notes
+
+Be specific and actionable. Reference actual content from the materials and transcript where relevant.""",
+        messages=[{"role": "user", "content": user_content}],
+    ) as stream:
+        for text in stream.text_stream:
+            yield text
+
+
+def stream_improvement_report(session_plan, session_transcript, group_name, session_type="tutoring"):
+    ctx = SESSION_TYPE_CONTEXTS.get(session_type, SESSION_TYPE_CONTEXTS["tutoring"])
+    user_content = f"""GROUP/PARTICIPANT: {group_name}
+SESSION TYPE: {ctx['label']}
+
+SESSION PLAN THAT WAS FOLLOWED:
+{session_plan}
+
+TRANSCRIPT OF THE SESSION:
+{session_transcript}
+
+Please give me honest feedback on how this session went, covering both how I can improve as a tutor and how the student can improve in their learning."""
+
+    with _get_client().messages.stream(
+        model="claude-sonnet-4-6",
+        max_tokens=2048,
+        system=f"""You are giving honest, constructive feedback on a {ctx['label']}.
+
+Analyze the session transcript against the plan and write a report with two clear parts:
+
+PART 1 — TUTOR IMPROVEMENT (addressed directly to the tutor using "you"):
+Focus on: {ctx['report_focus']}.
+
+Structure Part 1 with:
+## What You Did Well
+## What You Can Do Differently
+## Specific Suggestions for Your Next Session
+
+PART 2 — STUDENT PROGRESS & DEVELOPMENT:
+Focus on: what the student understood well, where they struggled, specific areas and skills they need to practice, and recommended next steps for their learning.
+
+Structure Part 2 with:
+## Student Strengths Observed
+## Areas the Student Needs to Work On
+## Recommended Practice for the Student
+## Overall Student Progress
+
+Be warm but honest. Give specific, actionable feedback tied to what actually happened in the transcript.""",
+        messages=[{"role": "user", "content": user_content}],
+    ) as stream:
+        for text in stream.text_stream:
+            yield text
