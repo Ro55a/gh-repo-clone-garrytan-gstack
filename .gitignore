@@ -1,0 +1,8 @@
+.env
+backend/uploads/
+backend/sessions/
+backend/groups.json
+frontend/node_modules/
+__pycache__/
+*.pyc
+.DS_Store
