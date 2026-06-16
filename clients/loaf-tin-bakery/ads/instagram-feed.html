@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Feed Ads – The Loaf Tin Bakery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Cabin', sans-serif; background: #1a1a1a; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+h1 { color: #fff; font-family: 'Amatic SC', cursive; font-size: 32px; margin-bottom: 8px; text-align: center; }
+p.meta { color: #999; font-size: 14px; margin-bottom: 32px; text-align: center; }
+.label { color: #666; font-size: 12px; text-align: center; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .06em; }
+
+/* All ads are 1080×1080 rendered at 540×540 (50%) */
+.ad {
+  width: 540px;
+  height: 540px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* ── AD 1: Click & Collect Announcement ─────────────────── */
+.ad-1 {
+  background: #78350F;
+}
+.ad-1 .bg-texture {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(234,88,12,.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(217,119,6,.25) 0%, transparent 50%);
+}
+.ad-1 .grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+.ad-1 .corner-loaf {
+  position: absolute; top: -30px; right: -30px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,.05);
+  border-radius: 50%;
+}
+.ad-1 .corner-loaf-2 {
+  position: absolute; bottom: -60px; left: -60px;
+  width: 250px; height: 250px;
+  background: rgba(217,119,6,.15);
+  border-radius: 50%;
+}
+.ad-1 .content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  padding: 44px 48px;
+  justify-content: space-between;
+}
+.ad-1 .badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #D97706; color: #fff;
+  border-radius: 999px; padding: 8px 18px;
+  font-size: 14px; font-weight: 700; width: fit-content;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.ad-1 .headline {
+  font-family: 'Amatic SC', cursive;
+  font-size: 80px; font-weight: 700; color: #fff;
+  line-height: .95; margin: 0;
+}
+.ad-1 .sub {
+  font-size: 18px; color: rgba(255,255,255,.82); line-height: 1.5;
+  max-width: 380px; margin-top: 12px;
+}
+.ad-1 .cta-row {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ad-1 .cta-btn {
+  background: #FEF3C7; color: #78350F;
+  padding: 14px 28px; border-radius: 999px;
+  font-size: 16px; font-weight: 700;
+}
+.ad-1 .handle {
+  color: rgba(255,255,255,.7); font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+}
+.ad-1 .handle-dot { width: 6px; height: 6px; background: #D97706; border-radius: 50%; }
+.ad-1 .url { font-size: 13px; color: rgba(255,255,255,.55); }
+
+/* ── AD 2: Sourdough Feature ─────────────────────────────── */
+.ad-2 {
+  background: #FFF7ED;
+}
+.ad-2 .stripe {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 300px;
+  background: linear-gradient(180deg, #92400E 0%, #B45309 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+}
+.ad-2 .bread-circle {
+  position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+  width: 260px; height: 260px;
+  background: linear-gradient(135deg, #D97706 0%, #92400E 100%);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 130px;
+  box-shadow: 0 8px 40px rgba(120,53,15,.4);
+}
+.ad-2 .content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 20px 40px 36px;
+  text-align: center;
+}
+.ad-2 .eyebrow {
+  font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: #B45309; margin-bottom: 8px;
+}
+.ad-2 .title {
+  font-family: 'Amatic SC', cursive; font-size: 56px; font-weight: 700;
+  color: #78350F; line-height: 1; margin-bottom: 8px;
+}
+.ad-2 .desc {
+  font-size: 15px; color: #6B4C2A; line-height: 1.5; margin-bottom: 20px;
+}
+.ad-2 .price-row {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+}
+.ad-2 .price {
+  font-family: 'Amatic SC', cursive; font-size: 44px; font-weight: 700; color: #92400E;
+}
+.ad-2 .pill {
+  background: #92400E; color: #fff;
+  padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 700;
+}
+.ad-2 .watermark {
+  position: absolute; bottom: 10px; right: 20px;
+  font-size: 12px; color: #B45309; font-weight: 600; opacity: .6;
+}
+
+/* ── AD 3: Social Proof / UGC Style ──────────────────────── */
+.ad-3 {
+  background: #FEF3C7;
+}
+.ad-3 .top-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: #92400E; height: 70px;
+  display: flex; align-items: center; padding: 0 32px;
+  justify-content: space-between;
+}
+.ad-3 .top-bar-logo {
+  font-family: 'Amatic SC', cursive; font-size: 28px; font-weight: 700; color: #fff;
+}
+.ad-3 .rating-stars {
+  display: flex; gap: 4px;
+}
+.ad-3 .star {
+  color: #F59E0B; font-size: 22px;
+}
+.ad-3 .review-box {
+  position: absolute; top: 95px; left: 32px; right: 32px;
+  background: #fff; border-radius: 20px; padding: 24px 28px;
+  box-shadow: 0 4px 24px rgba(120,53,15,.12);
+}
+.ad-3 .quote-mark {
+  font-size: 60px; color: #FDE68A; line-height: .6; margin-bottom: 8px;
+  font-family: Georgia, serif;
+}
+.ad-3 .review-text {
+  font-size: 18px; color: #1C0A00; line-height: 1.5; margin-bottom: 16px;
+  font-style: italic;
+}
+.ad-3 .reviewer {
+  display: flex; align-items: center; gap: 12px;
+}
+.ad-3 .reviewer-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, #D97706, #92400E);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 16px;
+}
+.ad-3 .reviewer-name { font-weight: 700; font-size: 15px; color: #78350F; }
+.ad-3 .reviewer-meta { font-size: 12px; color: #9CA3AF; }
+.ad-3 .bottom {
+  position: absolute; bottom: 32px; left: 32px; right: 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ad-3 .bottom-text {
+  font-family: 'Amatic SC', cursive; font-size: 32px; font-weight: 700; color: #78350F;
+}
+.ad-3 .bottom-pill {
+  background: #92400E; color: #fff; padding: 12px 22px;
+  border-radius: 999px; font-size: 15px; font-weight: 700;
+}
+.ad-3 .bottom-tag {
+  font-size: 13px; color: #B45309; font-weight: 600;
+}
+
+/* ── AD 4: Weekend Special ───────────────────────────────── */
+.ad-4 {
+  background: #1C0A00;
+}
+.ad-4 .glow-1 {
+  position: absolute; top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(217,119,6,.4) 0%, transparent 70%);
+}
+.ad-4 .glow-2 {
+  position: absolute; bottom: -60px; left: -60px;
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(146,64,14,.5) 0%, transparent 70%);
+}
+.ad-4 .grid-lines {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 54px 54px;
+}
+.ad-4 .content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  padding: 48px 48px;
+  justify-content: center; gap: 12px;
+}
+.ad-4 .day-label {
+  font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: #D97706;
+}
+.ad-4 .headline {
+  font-family: 'Amatic SC', cursive; font-size: 90px; font-weight: 700;
+  color: #fff; line-height: .9;
+}
+.ad-4 .underline {
+  width: 80px; height: 4px; background: #D97706; border-radius: 2px; margin: 8px 0;
+}
+.ad-4 .items {
+  display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+}
+.ad-4 .item-row {
+  display: flex; align-items: center; gap: 12px;
+}
+.ad-4 .item-emoji { font-size: 22px; }
+.ad-4 .item-name { font-size: 17px; color: rgba(255,255,255,.9); font-weight: 500; }
+.ad-4 .item-price { font-size: 15px; color: #D97706; font-weight: 700; margin-left: auto; }
+.ad-4 .cta-row {
+  display: flex; align-items: center; justify-content: space-between; margin-top: 20px;
+}
+.ad-4 .cta {
+  background: #D97706; color: #fff;
+  padding: 12px 28px; border-radius: 999px; font-size: 15px; font-weight: 700;
+}
+.ad-4 .handle {
+  font-size: 14px; color: rgba(255,255,255,.5); font-weight: 600;
+}
+</style>
+</head>
+<body>
+<h1>The Loaf Tin Bakery</h1>
+<p class="meta">Instagram Feed Ads · 1080×1080px (shown at 540×540) · 4 variations</p>
+
+<!-- AD 1 -->
+<div>
+  <p class="label">Ad 1 — Click & Collect Launch</p>
+  <div class="ad ad-1">
+    <div class="bg-texture"></div>
+    <div class="grain"></div>
+    <div class="corner-loaf"></div>
+    <div class="corner-loaf-2"></div>
+    <div class="content">
+      <div>
+        <div class="badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          New — Order Online
+        </div>
+      </div>
+      <div>
+        <h2 class="headline">Click&amp;<br>Collect<br>is here.</h2>
+        <p class="sub">Pre-order your sourdough, pastries &amp; seasonal bakes. Skip the sell-out. Collect from Compass Courtyard.</p>
+      </div>
+      <div class="cta-row">
+        <div>
+          <div class="cta-btn">Order Now →</div>
+          <div class="url" style="margin-top:8px">theloaftinbakery.co.uk/order</div>
+        </div>
+        <div style="text-align:right">
+          <div class="handle"><span class="handle-dot"></span>@theloaftinbakery</div>
+          <div class="handle" style="margin-top:4px;opacity:.6;font-size:12px">Wendens Ambo, Essex</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AD 2 -->
+<div>
+  <p class="label">Ad 2 — Hero Product (Sourdough)</p>
+  <div class="ad ad-2">
+    <div class="stripe"></div>
+    <div class="bread-circle">🍞</div>
+    <div class="content">
+      <div class="eyebrow">Baked Fresh Daily</div>
+      <div class="title">Country Sourdough</div>
+      <div class="desc">Tangy, open crumb, blistered crust.<br>Small-batch & handmade in Essex.</div>
+      <div class="price-row">
+        <div class="price">£6.50</div>
+        <div class="pill">Pre-Order →</div>
+      </div>
+    </div>
+    <div class="watermark">@theloaftinbakery</div>
+  </div>
+</div>
+
+<!-- AD 3 -->
+<div>
+  <p class="label">Ad 3 — Social Proof (Review)</p>
+  <div class="ad ad-3">
+    <div class="top-bar">
+      <span class="top-bar-logo">The Loaf Tin Bakery</span>
+      <div class="rating-stars" aria-label="5 stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+    </div>
+    <div class="review-box">
+      <div class="quote-mark">"</div>
+      <p class="review-text">Honestly the best sourdough I've had outside of London. The almond croissants are absolutely divine — I drive 20 minutes just for them.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">S</div>
+        <div>
+          <div class="reviewer-name">Sarah M.</div>
+          <div class="reviewer-meta">Google Review · Saffron Walden</div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div>
+        <div class="bottom-text">Now taking pre-orders</div>
+        <div class="bottom-tag">@theloaftinbakery · theloaftinbakery.co.uk</div>
+      </div>
+      <div class="bottom-pill">Order →</div>
+    </div>
+  </div>
+</div>
+
+<!-- AD 4 -->
+<div>
+  <p class="label">Ad 4 — Saturday Special (Dark)</p>
+  <div class="ad ad-4">
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+    <div class="grid-lines"></div>
+    <div class="content">
+      <div class="day-label">Saturday Morning · 9am–1pm</div>
+      <div class="headline">Fresh<br>out the<br>oven.</div>
+      <div class="underline"></div>
+      <div class="items">
+        <div class="item-row"><span class="item-emoji">🥐</span><span class="item-name">Almond Croissants</span><span class="item-price">£3.80</span></div>
+        <div class="item-row"><span class="item-emoji">🌀</span><span class="item-name">Cinnamon Rolls</span><span class="item-price">£3.50</span></div>
+        <div class="item-row"><span class="item-emoji">🍞</span><span class="item-name">Country Sourdough</span><span class="item-price">£6.50</span></div>
+        <div class="item-row"><span class="item-emoji">🍫</span><span class="item-name">Fudgy Brownies</span><span class="item-price">£3.20</span></div>
+      </div>
+      <div class="cta-row">
+        <div class="cta">Pre-order to secure yours</div>
+        <div class="handle">@theloaftinbakery</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

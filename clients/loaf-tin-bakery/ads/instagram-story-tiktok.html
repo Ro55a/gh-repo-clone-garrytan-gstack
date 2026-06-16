@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Story & TikTok Ads – The Loaf Tin Bakery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Cabin', sans-serif; background: #111; padding: 40px 20px; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start; }
+h1 { width: 100%; color: #fff; font-family: 'Amatic SC', cursive; font-size: 32px; text-align: center; }
+p.meta { width: 100%; color: #666; font-size: 14px; text-align: center; margin-bottom: 20px; }
+.story-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.story-label { color: #555; font-size: 11px; text-transform: uppercase; letter-spacing: .07em; }
+
+/* Stories/TikTok are 1080×1920, shown at 320×569 (≈30%) */
+.story {
+  width: 320px;
+  height: 568px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Story 1: Swipe Up / Click & Collect ─────────────────── */
+.s1 { background: #78350F; }
+.s1 .bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(234,88,12,.5) 0%, transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(217,119,6,.3) 0%, transparent 50%);
+}
+.s1 .circle-1 {
+  position: absolute; top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  background: rgba(255,255,255,.06); border-radius: 50%;
+}
+.s1 .circle-2 {
+  position: absolute; bottom: 80px; left: -80px;
+  width: 280px; height: 280px;
+  background: rgba(217,119,6,.15); border-radius: 50%;
+}
+.s1 .top-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: 24px 20px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.s1 .progress-bar {
+  flex: 1; height: 3px; background: rgba(255,255,255,.3); border-radius: 2px;
+}
+.s1 .progress-fill {
+  height: 100%; width: 60%; background: #fff; border-radius: 2px;
+}
+.s1 .account {
+  display: flex; align-items: center; gap: 8px;
+}
+.s1 .avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #D97706; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #fff;
+}
+.s1 .username { font-size: 13px; font-weight: 700; color: #fff; }
+.s1 .time { font-size: 11px; color: rgba(255,255,255,.6); }
+.s1 .content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  padding: 90px 24px 80px;
+  justify-content: center;
+}
+.s1 .kicker {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: #FDE68A; margin-bottom: 8px;
+}
+.s1 .headline {
+  font-family: 'Amatic SC', cursive;
+  font-size: 68px; font-weight: 700; color: #fff;
+  line-height: .95; margin-bottom: 12px;
+}
+.s1 .body-copy {
+  font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.6; max-width: 260px;
+  margin-bottom: 24px;
+}
+.s1 .steps {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px;
+}
+.s1 .step-item {
+  display: flex; align-items: center; gap: 10px;
+}
+.s1 .step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #D97706; color: #fff; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.s1 .step-text { font-size: 14px; color: rgba(255,255,255,.9); font-weight: 600; }
+.s1 .cta-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255,255,255,.2);
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.s1 .swipe-up {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.s1 .swipe-arrow {
+  font-size: 22px; color: #fff; animation: bounce 1.4s infinite;
+}
+.s1 .swipe-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.8); text-transform: uppercase; letter-spacing: .05em; }
+.s1 .cta-url { font-size: 12px; font-weight: 700; color: #FDE68A; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+/* ── Story 2: TikTok Style – Behind the Scenes ───────────── */
+.s2 { background: #0A0A0A; }
+.s2 .video-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,.0) 30%, rgba(0,0,0,.7) 70%, rgba(0,0,0,.92) 100%);
+}
+.s2 .bread-visual {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 200px;
+  background: linear-gradient(160deg, #92400E 0%, #D97706 50%, #B45309 100%);
+  display: flex; align-items: center; justify-content: center; font-size: 140px;
+}
+/* TikTok UI elements */
+.s2 .tiktok-right {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-60%);
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.s2 .tiktok-icon {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.s2 .tiktok-icon-circle {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.4);
+  display: flex; align-items: center; justify-content: center;
+}
+.s2 .tiktok-icon svg { width: 22px; height: 22px; fill: #fff; }
+.s2 .tiktok-icon-count { font-size: 11px; color: #fff; font-weight: 700; }
+.s2 .tiktok-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #D97706; border: 2px solid #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff;
+}
+.s2 .tiktok-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px 24px;
+}
+.s2 .tiktok-username {
+  font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.s2 .verified { font-size: 14px; }
+.s2 .tiktok-caption {
+  font-size: 14px; color: rgba(255,255,255,.9); line-height: 1.5; margin-bottom: 10px;
+  max-width: 240px;
+}
+.s2 .tiktok-tags {
+  font-size: 13px; font-weight: 700;
+  color: rgba(255,255,255,.7); margin-bottom: 14px;
+}
+.s2 .tiktok-cta-btn {
+  background: #fff; color: #1C0A00;
+  padding: 12px 20px; border-radius: 6px;
+  font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;
+}
+.s2 .tiktok-progress {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: rgba(255,255,255,.2);
+}
+.s2 .tiktok-progress-fill {
+  height: 100%; width: 35%; background: #fff;
+}
+
+/* ── Story 3: Limited Stock Urgency ──────────────────────── */
+.s3 { background: #FFF7ED; }
+.s3 .top-accent {
+  position: absolute; top: 0; left: 0; right: 0; height: 200px;
+  background: linear-gradient(135deg, #92400E 0%, #D97706 100%);
+  clip-path: ellipse(60% 70% at 50% 0%);
+}
+.s3 .emoji-hero {
+  position: absolute; top: 36px; left: 50%; transform: translateX(-50%);
+  font-size: 100px; text-align: center; line-height: 1;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,.3));
+}
+.s3 .content {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 20px 24px 80px;
+}
+.s3 .urgency-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #DC2626; color: #fff;
+  border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 700;
+  margin-bottom: 12px;
+}
+.s3 .urgency-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.s3 .headline {
+  font-family: 'Amatic SC', cursive; font-size: 60px; font-weight: 700;
+  color: #78350F; line-height: 1; margin-bottom: 12px;
+}
+.s3 .body { font-size: 15px; color: #6B4C2A; line-height: 1.6; margin-bottom: 20px; }
+.s3 .stock-meter {
+  background: #FDE68A; border-radius: 999px; height: 10px; margin-bottom: 6px; overflow: hidden;
+}
+.s3 .stock-fill {
+  height: 100%; width: 25%; background: #DC2626; border-radius: 999px;
+}
+.s3 .stock-label { font-size: 12px; font-weight: 700; color: #DC2626; margin-bottom: 16px; }
+.s3 .cta-btn {
+  width: 100%; background: #92400E; color: #fff;
+  padding: 16px; border-radius: 12px; font-size: 17px; font-weight: 700; text-align: center;
+  font-family: 'Amatic SC', cursive; letter-spacing: .03em;
+}
+.s3 .bottom-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: #92400E; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.s3 .bottom-handle { font-size: 13px; font-weight: 700; color: #FDE68A; }
+.s3 .bottom-url { font-size: 12px; color: rgba(255,255,255,.7); }
+</style>
+</head>
+<body>
+<h1>The Loaf Tin Bakery</h1>
+<p class="meta">Instagram Stories & TikTok Ads · 1080×1920px (shown at 320×568) · 3 variations</p>
+
+<!-- Story 1 -->
+<div class="story-wrap">
+  <p class="story-label">Story 1 — Click & Collect Launch (Instagram Story)</p>
+  <div class="story s1">
+    <div class="bg"></div>
+    <div class="circle-1"></div>
+    <div class="circle-2"></div>
+    <!-- Top Bar (Instagram story UI) -->
+    <div class="top-bar">
+      <div style="flex:1;height:3px;background:rgba(255,255,255,.2);border-radius:2px"><div style="height:100%;width:60%;background:#fff;border-radius:2px"></div></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-left:10px">
+        <div class="avatar">L</div>
+        <div>
+          <div class="username">theloaftinbakery</div>
+          <div class="time">2h</div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="kicker">The Loaf Tin Bakery</div>
+      <h2 class="headline">Order<br>before<br>they're<br>gone.</h2>
+      <p class="body-copy">Our bakes sell out fast. Now you can pre-order online and collect at your chosen time.</p>
+      <div class="steps">
+        <div class="step-item"><div class="step-num">1</div><div class="step-text">Browse this week's menu</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-text">Choose your collection slot</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-text">Pay on the day — it's yours</div></div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <div class="swipe-up">
+        <div class="swipe-arrow">↑</div>
+        <div class="swipe-label">Swipe Up to Order</div>
+      </div>
+      <div class="cta-url">theloaftinbakery.co.uk</div>
+    </div>
+  </div>
+</div>
+
+<!-- Story 2 -->
+<div class="story-wrap">
+  <p class="story-label">Story 2 — TikTok Behind-the-Scenes Style</p>
+  <div class="story s2">
+    <div class="bread-visual">🍞</div>
+    <div class="video-bg"></div>
+    <!-- TikTok Right Actions -->
+    <div class="tiktok-right">
+      <div class="tiktok-avatar">L</div>
+      <div class="tiktok-icon">
+        <div class="tiktok-icon-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+        <div class="tiktok-icon-count">1.2k</div>
+      </div>
+      <div class="tiktok-icon">
+        <div class="tiktok-icon-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" fill="none" stroke="#fff" stroke-width="2"/></svg></div>
+        <div class="tiktok-icon-count">89</div>
+      </div>
+      <div class="tiktok-icon">
+        <div class="tiktok-icon-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="#fff" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="#fff" stroke-width="2"/></svg></div>
+        <div class="tiktok-icon-count">Share</div>
+      </div>
+    </div>
+    <!-- TikTok Bottom -->
+    <div class="tiktok-bottom">
+      <div class="tiktok-username">
+        <span>@theloaftinbakery</span><span class="verified">✓</span>
+      </div>
+      <div class="tiktok-caption">This is what 4am looks like when you're a baker 🍞✨ Fresh sourdough scored &amp; in the oven. Pre-order yours so it's waiting for you!</div>
+      <div class="tiktok-tags">#sourdough #artisanbakery #essexfoodie #bakery #clickandcollect</div>
+      <div class="tiktok-cta-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Pre-Order Now
+      </div>
+    </div>
+    <div class="tiktok-progress"><div class="tiktok-progress-fill"></div></div>
+  </div>
+</div>
+
+<!-- Story 3 -->
+<div class="story-wrap">
+  <p class="story-label">Story 3 — Limited Stock Urgency (Instagram / TikTok)</p>
+  <div class="story s3">
+    <div class="top-accent"></div>
+    <div class="emoji-hero">🥐</div>
+    <div class="content">
+      <div class="urgency-badge">
+        <span class="dot"></span>
+        Only a few left!
+      </div>
+      <h2 class="headline">This week's<br>almond<br>croissants<br>are in.</h2>
+      <p class="body">Buttery, flaky, filled with almond frangipane. Made fresh every morning. Pre-order to guarantee yours — first come, first served.</p>
+      <div class="stock-meter"><div class="stock-fill"></div></div>
+      <div class="stock-label">⚡ 3 of 12 remaining for Saturday</div>
+      <div class="cta-btn">Secure Yours Now →</div>
+    </div>
+    <div class="bottom-bar">
+      <div class="bottom-handle">@theloaftinbakery</div>
+      <div class="bottom-url">theloaftinbakery.co.uk/order</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

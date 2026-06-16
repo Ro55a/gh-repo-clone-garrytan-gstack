@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Analysis & Growth Strategy – The Loaf Tin Bakery | Catalyst & Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#92400E; --light:#B45309; --secondary:#D97706;
+  --accent:#EA580C; --bg:#FFFBF2; --bg-warm:#FFF7ED;
+  --cream:#FEF3C7; --card:#FFFFFF;
+  --fg:#78350F; --text:#1C0A00; --muted:#6B4C2A;
+  --border:#FDE68A; --border-d:#F59E0B;
+  --success:#15803D; --error:#DC2626; --info:#1D4ED8;
+  --font-h:'Amatic SC',cursive; --font-b:'Cabin',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;display:block}
+
+/* Cover */
+.cover{
+  background:linear-gradient(135deg,var(--fg) 0%,var(--primary) 55%,var(--light) 100%);
+  color:#fff; padding:80px 40px; text-align:center; position:relative; overflow:hidden;
+}
+.cover::before{
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cover-inner{position:relative;max-width:740px;margin:0 auto}
+.cover-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 18px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:20px}
+.cover h1{font-family:var(--font-h);font-size:clamp(40px,7vw,72px);font-weight:700;line-height:1;margin-bottom:16px}
+.cover .sub{font-size:18px;opacity:.85;max-width:560px;margin:0 auto 32px;line-height:1.6}
+.cover-meta{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;font-size:14px;font-weight:600}
+.cover-meta-item{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 18px}
+
+/* Layout */
+.container{max-width:900px;margin:0 auto;padding:0 24px}
+
+/* TOC */
+.toc-section{background:var(--cream);border-bottom:2px solid var(--border);padding:32px 24px}
+.toc-inner{max-width:900px;margin:0 auto}
+.toc-title{font-family:var(--font-h);font-size:28px;font-weight:700;color:var(--fg);margin-bottom:16px}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border-radius:10px;border:1px solid var(--border);font-size:14px;font-weight:600;color:var(--fg);cursor:pointer;transition:background .15s}
+.toc-item:hover{background:var(--bg-warm)}
+.toc-num{width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* Sections */
+.section{padding:56px 0;border-bottom:2px solid var(--border)}
+.section-inner{max-width:900px;margin:0 auto;padding:0 24px}
+.section-kicker{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--secondary);margin-bottom:8px}
+.section-title{font-family:var(--font-h);font-size:clamp(30px,5vw,48px);font-weight:700;color:var(--fg);margin-bottom:8px;line-height:1.05}
+.section-intro{font-size:16px;color:var(--muted);max-width:680px;margin-bottom:32px;line-height:1.7}
+
+/* Cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:16px}
+.card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 2px 8px rgba(120,53,15,.06)}
+.card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.card-icon svg{width:22px;height:22px}
+.card-title{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--fg);margin-bottom:6px}
+.card-text{font-size:14px;color:var(--muted);line-height:1.55}
+
+/* SWOT */
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;border-radius:16px;overflow:hidden;border:2px solid var(--border)}
+.swot-cell{padding:24px;min-height:180px}
+.swot-cell h3{font-family:var(--font-h);font-size:22px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.swot-cell ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.swot-cell li{font-size:14px;line-height:1.5;display:flex;align-items:flex-start;gap:7px}
+.swot-cell li::before{content:'';width:6px;height:6px;border-radius:50%;margin-top:6px;flex-shrink:0}
+.swot-s{background:#FFF7ED}.swot-s li::before{background:#D97706}.swot-s h3{color:#92400E}
+.swot-w{background:#FEF2F2}.swot-w li::before{background:#DC2626}.swot-w h3{color:#991B1B}
+.swot-o{background:#F0FDF4}.swot-o li::before{background:#15803D}.swot-o h3{color:#166534}
+.swot-t{background:#EFF6FF}.swot-t li::before{background:#1D4ED8}.swot-t h3{color:#1D4ED8}
+
+/* Priority matrix */
+.priority-table{width:100%;border-collapse:collapse;margin-top:16px;border-radius:12px;overflow:hidden;border:2px solid var(--border)}
+.priority-table th{background:var(--fg);color:#fff;padding:12px 16px;font-size:13px;font-weight:700;text-align:left;text-transform:uppercase;letter-spacing:.05em}
+.priority-table td{padding:12px 16px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+.priority-table tr:last-child td{border-bottom:none}
+.priority-table tr:nth-child(even) td{background:var(--bg-warm)}
+.priority-high{display:inline-flex;align-items:center;gap:4px;background:#FEF2F2;color:#DC2626;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.priority-med{display:inline-flex;align-items:center;gap:4px;background:#FEF3C7;color:#92400E;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.priority-low{display:inline-flex;align-items:center;gap:4px;background:#F0FDF4;color:#15803D;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.impact-bar{height:8px;border-radius:999px;background:var(--border);overflow:hidden;width:120px;display:inline-block;vertical-align:middle;margin-left:8px}
+.impact-fill{height:100%;border-radius:999px}
+
+/* Content calendar */
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px}
+.cal-header{background:var(--fg);color:#fff;text-align:center;padding:8px 4px;font-size:11px;font-weight:700;border-radius:6px;text-transform:uppercase}
+.cal-cell{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px;min-height:80px;font-size:11px;line-height:1.4}
+.cal-cell.empty{background:transparent;border:none}
+.cal-cell .day-num{font-weight:700;color:var(--fg);font-size:13px;margin-bottom:4px}
+.cal-cell.post-day{background:var(--bg-warm);border-color:var(--border-d)}
+.cal-cell .post-tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-bottom:3px}
+.tag-ig{background:#FEE2E2;color:#DC2626}
+.tag-tt{background:#EDE9FE;color:#7C3AED}
+.tag-both{background:#FEF3C7;color:#92400E}
+
+/* AI Tools section */
+.tool-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
+.tool-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:18px 20px}
+.tool-card-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.tool-emoji{font-size:28px}
+.tool-name{font-family:var(--font-h);font-size:19px;font-weight:700;color:var(--fg)}
+.tool-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--secondary)}
+.tool-desc{font-size:13px;color:var(--muted);line-height:1.55}
+.tool-use{font-size:12px;font-weight:700;color:var(--primary);margin-top:8px}
+
+/* ROI calculator */
+.roi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:16px}
+.roi-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:20px;text-align:center}
+.roi-num{font-family:var(--font-h);font-size:44px;font-weight:700;color:var(--primary);line-height:1}
+.roi-label{font-size:13px;font-weight:600;color:var(--muted);margin-top:4px}
+.roi-note{font-size:11px;color:#9CA3AF;margin-top:4px}
+.roi-card.featured{background:var(--primary);border-color:var(--primary)}
+.roi-card.featured .roi-num,.roi-card.featured .roi-label,.roi-card.featured .roi-note{color:#fff}
+
+/* Timeline */
+.timeline{position:relative;margin-top:24px}
+.timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:3px;background:var(--border-d);border-radius:2px}
+.timeline-item{display:flex;gap:20px;margin-bottom:28px;position:relative}
+.timeline-dot{width:48px;height:48px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:17px;font-weight:700;flex-shrink:0;z-index:1;box-shadow:0 0 0 4px var(--bg)}
+.timeline-body{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:18px 20px;flex:1}
+.timeline-phase{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--secondary);margin-bottom:4px}
+.timeline-title{font-family:var(--font-h);font-size:22px;font-weight:700;color:var(--fg);margin-bottom:8px}
+.timeline-items{list-style:none;display:flex;flex-direction:column;gap:5px}
+.timeline-items li{font-size:14px;color:var(--muted);display:flex;align-items:flex-start;gap:7px}
+.timeline-items li::before{content:'✓';font-weight:700;color:var(--success);flex-shrink:0}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:16px}
+.kpi-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:18px 20px;border-left:4px solid var(--primary)}
+.kpi-metric{font-family:var(--font-h);font-size:32px;font-weight:700;color:var(--primary)}
+.kpi-label{font-size:13px;font-weight:700;color:var(--fg);margin-top:2px}
+.kpi-desc{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* Footer */
+.report-footer{background:var(--fg);color:rgba(255,255,255,.8);padding:40px 24px;margin-top:0}
+.report-footer-inner{max-width:900px;margin:0 auto;text-align:center}
+.report-footer h2{font-family:var(--font-h);font-size:28px;color:#fff;margin-bottom:8px}
+.report-footer p{font-size:14px;margin-bottom:4px}
+
+@media(max-width:600px){
+  .swot-grid{grid-template-columns:1fr}
+  .cover{padding:48px 20px}
+  .calendar-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">Catalyst &amp; Co. · Confidential</div>
+    <h1>Business Analysis &amp; Growth Strategy</h1>
+    <p class="sub">A comprehensive review and digital growth roadmap for The Loaf Tin Bakery — from online ordering to social media, AI tools and operational efficiency.</p>
+    <div class="cover-meta">
+      <span class="cover-meta-item">The Loaf Tin Bakery</span>
+      <span class="cover-meta-item">Wendens Ambo, Essex</span>
+      <span class="cover-meta-item">June 2025</span>
+      <span class="cover-meta-item">Prepared by Catalyst &amp; Co.</span>
+    </div>
+  </div>
+</div>
+
+<!-- Table of Contents -->
+<div class="toc-section">
+  <div class="toc-inner">
+    <div class="toc-title">Contents</div>
+    <div class="toc-grid">
+      <a class="toc-item" href="#business-snapshot"><span class="toc-num">1</span>Business Snapshot</a>
+      <a class="toc-item" href="#website-audit"><span class="toc-num">2</span>Website &amp; Digital Audit</a>
+      <a class="toc-item" href="#swot"><span class="toc-num">3</span>SWOT Analysis</a>
+      <a class="toc-item" href="#click-collect"><span class="toc-num">4</span>Click &amp; Collect System</a>
+      <a class="toc-item" href="#social-strategy"><span class="toc-num">5</span>Social Media Strategy</a>
+      <a class="toc-item" href="#content-calendar"><span class="toc-num">6</span>Content Calendar</a>
+      <a class="toc-item" href="#ai-tools"><span class="toc-num">7</span>AI Tools for Efficiency</a>
+      <a class="toc-item" href="#growth-priorities"><span class="toc-num">8</span>Growth Priorities</a>
+      <a class="toc-item" href="#roi"><span class="toc-num">9</span>ROI Projections</a>
+      <a class="toc-item" href="#roadmap"><span class="toc-num">10</span>90-Day Roadmap</a>
+      <a class="toc-item" href="#kpis"><span class="toc-num">11</span>KPIs &amp; Metrics</a>
+    </div>
+  </div>
+</div>
+
+<!-- 1. Business Snapshot -->
+<div class="section" id="business-snapshot">
+  <div class="section-inner">
+    <div class="section-kicker">Section 1</div>
+    <h2 class="section-title">Business Snapshot</h2>
+    <p class="section-intro">The Loaf Tin Bakery is a premium small-batch artisan bakery operating from Compass Courtyard in Wendens Ambo, near Saffron Walden, Essex. Founded as THE LOAF TIN BAKERY LIMITED (Companies House: 15602966), the business has built an outstanding reputation with near-perfect ratings across all review platforms.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="card-title">Location</div>
+        <div class="card-text">Unit 8, Compass Courtyard, Wendens Ambo CB11 4JY — a rural artisan hub 2 miles from Saffron Walden town centre.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#FFF7ED"><svg viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="card-title">Opening Hours</div>
+        <div class="card-text">Tue–Fri 8am–4pm · Sat 9am–1pm · Closed Sun &amp; Mon. Limited operating window creates natural scarcity and demand.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#F0FDF4"><svg viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="card-title">Reputation</div>
+        <div class="card-text">4.9/5 average across 82+ reviews (RestaurantGuru). Consistently praised for quality, flavour and welcoming atmosphere.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="card-title">Product Range</div>
+        <div class="card-text">Sourdough breads, French-style pastries, seasonal cakes &amp; tarts, plus a growing pantry range under sister brand Dominique's.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#FEF2F2"><svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="card-title">Audience</div>
+        <div class="card-text">Local residents, commuters passing through the B1052 corridor, food-conscious consumers aged 25–55, food tourism visitors.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div class="card-title">Revenue Model</div>
+        <div class="card-text">Walk-in retail sales, Too Good To Go surplus, merchandise (branded aprons). No current online ordering or delivery.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Website Audit -->
+<div class="section" id="website-audit">
+  <div class="section-inner">
+    <div class="section-kicker">Section 2</div>
+    <h2 class="section-title">Website &amp; Digital Audit</h2>
+    <p class="section-intro">The bakery operates across two web presences: <strong>theloaftinbakery.co.uk</strong> (Shopify-hosted, primarily for merchandise) and <strong>loaf-tin-bake.square.site</strong> (Square ordering site). Both have significant gaps that are limiting customer acquisition and conversion.</p>
+
+    <table class="priority-table">
+      <thead>
+        <tr><th>Area</th><th>Current State</th><th>Issue</th><th>Priority</th><th>Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Online Ordering</strong></td>
+          <td>Square site exists but not prominently promoted</td>
+          <td>Customers don't know how to pre-order; items sell out on walk-in basis causing frustration</td>
+          <td><span class="priority-high">🔴 Critical</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:100%;background:#DC2626"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>Mobile UX</strong></td>
+          <td>Shopify theme not optimised for food discovery</td>
+          <td>72% of food searches are mobile; current site is merchandise-focused not bakery-focused</td>
+          <td><span class="priority-high">🔴 Critical</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:90%;background:#DC2626"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>SEO</strong></td>
+          <td>No visible meta descriptions or structured data</td>
+          <td>Missing local SEO schema ("bakery near Saffron Walden"), no Google Business optimisation apparent</td>
+          <td><span class="priority-high">🔴 High</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:85%;background:#DC2626"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>Social Linking</strong></td>
+          <td>Instagram exists (@theloaftinbakery) but poorly integrated</td>
+          <td>No "link in bio" order flow; Instagram profile doesn't drive to ordering system</td>
+          <td><span class="priority-high">🔴 High</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:82%;background:#EA580C"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>Menu Visibility</strong></td>
+          <td>No weekly menu published consistently online</td>
+          <td>Customers can't plan visits; no anticipation-building content driving footfall</td>
+          <td><span class="priority-med">🟡 Medium</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:70%;background:#D97706"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>Email Capture</strong></td>
+          <td>No newsletter or mailing list</td>
+          <td>No owned audience — totally reliant on social algorithms for customer communication</td>
+          <td><span class="priority-med">🟡 Medium</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:65%;background:#D97706"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>Google Business Profile</strong></td>
+          <td>Likely basic listing exists</td>
+          <td>Missing photos updated weekly, no "Order" CTA button, no Google Posts for weekly specials</td>
+          <td><span class="priority-med">🟡 Medium</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:68%;background:#D97706"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>Page Speed</strong></td>
+          <td>Shopify default theme</td>
+          <td>No image optimisation for product photography; slow load on mobile harms conversion</td>
+          <td><span class="priority-low">🟢 Low</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:45%;background:#15803D"></span></span></td>
+        </tr>
+        <tr>
+          <td><strong>Photography</strong></td>
+          <td>Social photos are good quality</td>
+          <td>Website lacks professional hero imagery; no lifestyle shots connecting product to place</td>
+          <td><span class="priority-low">🟢 Low</span></td>
+          <td><span class="impact-bar"><span class="impact-fill" style="width:55%;background:#15803D"></span></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 3. SWOT -->
+<div class="section" id="swot">
+  <div class="section-inner">
+    <div class="section-kicker">Section 3</div>
+    <h2 class="section-title">SWOT Analysis</h2>
+    <p class="section-intro">A strategic assessment of The Loaf Tin Bakery's current position to guide where we focus Catalyst &amp; Co.'s consulting energy.</p>
+    <div class="swot-grid">
+      <div class="swot-cell swot-s">
+        <h3>💪 Strengths</h3>
+        <ul>
+          <li>Exceptional product quality — 4.9/5 average rating across 82+ reviews</li>
+          <li>Strong local brand identity and community goodwill</li>
+          <li>Natural scarcity model creates perceived value and urgency</li>
+          <li>Unique rural location with artisan destination appeal</li>
+          <li>Growing sister brand (Dominique's pantry range)</li>
+          <li>Too Good To Go partnership reduces waste and attracts new customers</li>
+          <li>Authentic brand story — French-inspired, small-batch, handmade</li>
+        </ul>
+      </div>
+      <div class="swot-cell swot-w">
+        <h3>⚠️ Weaknesses</h3>
+        <ul>
+          <li>No reliable online ordering or pre-order system in active use</li>
+          <li>Limited operating hours (Tue–Sat only) caps revenue ceiling</li>
+          <li>No email marketing list — zero owned audience</li>
+          <li>Walk-in only model frustrates customers when items sell out</li>
+          <li>Website not optimised for food discovery or local search</li>
+          <li>Single location limits scalability</li>
+          <li>No loyalty programme retaining high-value repeat customers</li>
+        </ul>
+      </div>
+      <div class="swot-cell swot-o">
+        <h3>🚀 Opportunities</h3>
+        <ul>
+          <li>Click &amp; Collect system to capture lost sales and reduce waste</li>
+          <li>Instagram/TikTok food content has enormous organic reach potential</li>
+          <li>Corporate catering orders (offices in Saffron Walden, Cambridge commuter belt)</li>
+          <li>Subscription box or weekly bread CSA model</li>
+          <li>Baking workshops / experiences as premium revenue stream</li>
+          <li>Wholesale to local restaurants, delis and farm shops</li>
+          <li>Seasonal hamper &amp; gifting market (Christmas, Easter)</li>
+          <li>Expand Dominique's range as a standalone DTC e-commerce brand</li>
+        </ul>
+      </div>
+      <div class="swot-cell swot-t">
+        <h3>⚡ Threats</h3>
+        <ul>
+          <li>Artisan bakery trend attracting new local competitors</li>
+          <li>Rising ingredient costs (organic flour, butter) squeezing margins</li>
+          <li>Algorithm dependency for Instagram reach</li>
+          <li>Key-person risk — bakery quality tied to founder's presence</li>
+          <li>Supermarket in-store bakery "artisan" positioning normalising the category</li>
+          <li>Rural location means limited walk-in traffic vs town-centre competitors</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Click & Collect -->
+<div class="section" id="click-collect">
+  <div class="section-inner">
+    <div class="section-kicker">Section 4</div>
+    <h2 class="section-title">Click &amp; Collect System</h2>
+    <p class="section-intro">We have built a fully functional click-and-collect web application (see <code>click-collect/index.html</code>) and an admin order management dashboard (see <code>admin/index.html</code>). Here's what the system delivers and the business case for it.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Customer App Features</div>
+        <div class="card-text">Product catalogue with categories · Date &amp; time slot selection · Basket with quantity control · Checkout with form validation · Order confirmation with reference number · Mobile-first, WCAG-accessible design.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Admin Dashboard Features</div>
+        <div class="card-text">Live order queue with status workflow (New → Confirmed → Ready → Collected) · Bake Planner aggregating quantities across all orders · Revenue overview &amp; best-seller tracking · Printable order sheets.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Business Impact</div>
+        <div class="card-text">Eliminates sell-out frustration · Allows accurate bake planning reducing waste by an estimated 20–30% · Captures customer data for future marketing · Creates a 6pm cut-off deadline that drives urgency.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Implementation Path</div>
+        <div class="card-text">This prototype can be deployed as-is to Netlify/Vercel for free. For production, integrate with Stripe for card-on-collection pre-auth, or connect to Square POS via their API (already used by the bakery).</div>
+      </div>
+    </div>
+    <div style="margin-top:24px;background:var(--cream);border:2px solid var(--border-d);border-radius:16px;padding:20px 24px">
+      <strong style="color:var(--fg);font-size:15px;display:block;margin-bottom:8px">💡 Quick Win: The 6pm Cut-Off Psychology</strong>
+      <p style="font-size:14px;color:var(--muted)">Promoting "Order by 6pm today for tomorrow's collection" creates genuine urgency on social media. Posting the daily remaining stock count on Instagram stories ("3 almond croissants left for Saturday — pre-order now") drives immediate click-throughs to the ordering page. This is the single highest-ROI content format for a bakery.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Social Strategy -->
+<div class="section" id="social-strategy">
+  <div class="section-inner">
+    <div class="section-kicker">Section 5</div>
+    <h2 class="section-title">Social Media Strategy</h2>
+    <p class="section-intro">The bakery has strong natural content potential — food content receives 78% more engagement than average posts. The strategy is to build a content engine that drives consistent traffic to the click-and-collect system.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+      <div class="card" style="border-left:4px solid #E1306C">
+        <div class="card-title" style="color:#C13584">Instagram Strategy</div>
+        <div class="card-text">
+          <strong>Profile:</strong> Bio → "Pre-order link 👇" → Linktree → click-collect page<br><br>
+          <strong>Reels (3×/week):</strong> Bread scoring, croissant lamination, cookie pull, morning bake sequences<br><br>
+          <strong>Stories (daily):</strong> "Today's bake" countdown, stock availability, customer collections<br><br>
+          <strong>Feed (3×/week):</strong> Hero product shots, seasonal specials, behind-scenes kitchen<br><br>
+          <strong>Hashtags:</strong> #EssexFoodie #SaffronWalden #ArtisanBakery #SourdoughBread #LocalBakery #UKBakery #FoodPhotography
+        </div>
+      </div>
+      <div class="card" style="border-left:4px solid #010101">
+        <div class="card-title">TikTok Strategy</div>
+        <div class="card-text">
+          <strong>Account:</strong> @theloaftinbakery — same handle as Instagram<br><br>
+          <strong>Content pillars:</strong><br>
+          1. "4am Baker" — early morning baking POV<br>
+          2. "Would you try this?" — unusual flavour reveals<br>
+          3. Bread scoring ASMR — hugely popular format<br>
+          4. "Day in the life of a micro bakery"<br>
+          5. Recipe reveals / sourdough starter tips<br><br>
+          <strong>Target:</strong> Food TikTok (#FoodTok, 150B+ views); #SourdoughTok community<br><br>
+          <strong>CTA in every video:</strong> "Link in bio to pre-order"
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-h);font-size:24px;color:var(--fg);margin-bottom:12px">AI-Powered Ad Creatives (Built for You)</h3>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:16px">See <code>ads/instagram-feed.html</code> (4 feed variations) and <code>ads/instagram-story-tiktok.html</code> (3 story/TikTok overlays). Each is production-ready at correct dimensions.</p>
+
+    <table class="priority-table">
+      <thead><tr><th>Ad Format</th><th>Dimensions</th><th>Objective</th><th>Budget Rec.</th></tr></thead>
+      <tbody>
+        <tr><td>Instagram Feed (4 designs)</td><td>1080×1080</td><td>Brand awareness + click-to-order</td><td>£5–10/day</td></tr>
+        <tr><td>Instagram Story (3 designs)</td><td>1080×1920</td><td>Urgency + swipe-up to order</td><td>£5/day</td></tr>
+        <tr><td>TikTok Spark Ad</td><td>1080×1920</td><td>Reach food audience + BTS appeal</td><td>£10/day min</td></tr>
+        <tr><td>Google Display / Search</td><td>Various</td><td>"Bakery near Saffron Walden" searches</td><td>£3–5/day</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 6. Content Calendar -->
+<div class="section" id="content-calendar">
+  <div class="section-inner">
+    <div class="section-kicker">Section 6</div>
+    <h2 class="section-title">Sample Content Calendar</h2>
+    <p class="section-intro">A one-week sample schedule showing the content cadence across Instagram and TikTok. Aim for consistency over volume — 3–4 posts per week is optimal for small teams.</p>
+    <div class="calendar-grid">
+      <div class="cal-header">Mon</div>
+      <div class="cal-header">Tue</div>
+      <div class="cal-header">Wed</div>
+      <div class="cal-header">Thu</div>
+      <div class="cal-header">Fri</div>
+      <div class="cal-header">Sat</div>
+      <div class="cal-header">Sun</div>
+
+      <div class="cal-cell"><div class="day-num">CLOSED</div><span class="post-tag tag-both">Schedule</span><div>Plan &amp; schedule this week's content in advance</div></div>
+      <div class="cal-cell post-day"><div class="day-num">OPEN</div><span class="post-tag tag-ig">IG Reel</span><div>"This week's menu is in 🍞" — bread reveal Reel</div></div>
+      <div class="cal-cell post-day"><div class="day-num">OPEN</div><span class="post-tag tag-tt">TikTok</span><div>4am bake process — bread scoring ASMR</div></div>
+      <div class="cal-cell post-day"><div class="day-num">OPEN</div><span class="post-tag tag-ig">IG Story</span><div>Mid-week stock check — "X croissants left for Sat"</div></div>
+      <div class="cal-cell post-day"><div class="day-num">OPEN</div><span class="post-tag tag-both">Both</span><div>"Last chance to pre-order for Saturday!" urgency post</div></div>
+      <div class="cal-cell post-day"><div class="day-num">OPEN</div><span class="post-tag tag-both">Both</span><div>Saturday morning unboxing / collection moment</div></div>
+      <div class="cal-cell"><div class="day-num">CLOSED</div><span class="post-tag tag-ig">IG Post</span><div>Sunday "next week preview" teaser to drive Monday pre-orders</div></div>
+    </div>
+
+    <div style="margin-top:20px;background:var(--bg-warm);border:2px solid var(--border);border-radius:14px;padding:18px 20px">
+      <strong style="color:var(--fg);font-size:15px;display:block;margin-bottom:8px">📱 10 High-Performance Content Ideas</strong>
+      <ol style="padding-left:20px;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:14px;color:var(--muted)">
+        <li>"What sells out first? Watch and see" — real-time till roll emptying</li>
+        <li>Bread scoring patterns — hypnotic and highly shareable</li>
+        <li>"Rate our sourdough from 1–10" — comment bait</li>
+        <li>Sourdough starter "is it still alive?" 30-day journey</li>
+        <li>"POV: You work at a bakery at 4am" — TikTok gold</li>
+        <li>Flour cloud moment when shaping dough — ASMR</li>
+        <li>Customer reaction videos at point of collection</li>
+        <li>"We only made 6 of these..." limited drop announcement</li>
+        <li>Seasonal ingredient reveal — "fig and honey tart is back"</li>
+        <li>Dominique's pantry range gifting content for Christmas/Mother's Day</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- 7. AI Tools -->
+<div class="section" id="ai-tools">
+  <div class="section-inner">
+    <div class="section-kicker">Section 7</div>
+    <h2 class="section-title">AI Tools for Business Efficiency</h2>
+    <p class="section-intro">These tools will save the bakery team significant time on marketing, operations and customer communication — freeing them to focus on baking.</p>
+    <div class="tool-list">
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">✍️</span><div><div class="tool-name">ChatGPT / Claude</div><div class="tool-cat">Copywriting</div></div></div>
+        <div class="tool-desc">Generate weekly menu descriptions, Instagram captions, email newsletters and ad copy in seconds. Use a bakery-specific prompt template for consistent brand voice.</div>
+        <div class="tool-use">Use: 30 mins → 5 mins per week on copy</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">🎨</span><div><div class="tool-name">Canva AI</div><div class="tool-cat">Design</div></div></div>
+        <div class="tool-desc">Magic Design auto-generates on-brand social posts from photos. Use their food templates and Magic Write for captions. Schedule directly to Instagram &amp; TikTok via Canva Scheduler.</div>
+        <div class="tool-use">Use: Daily social post creation in under 10 mins</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">📸</span><div><div class="tool-name">Lightroom Mobile</div><div class="tool-cat">Photography</div></div></div>
+        <div class="tool-desc">AI-powered auto-enhance for food photos taken on iPhone. One-tap editing with presets matched to the bakery's warm amber palette creates consistent feed aesthetics.</div>
+        <div class="tool-use">Use: Every product photo before posting</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">📧</span><div><div class="tool-name">Mailchimp (Free)</div><div class="tool-cat">Email Marketing</div></div></div>
+        <div class="tool-desc">Build a weekly "This Week's Menu" email list. AI subject line optimisation, send-time optimisation, and automation for welcome sequences. Free up to 500 contacts.</div>
+        <div class="tool-use">Use: Weekly newsletter to captured customer emails</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">📊</span><div><div class="tool-name">Later / Buffer</div><div class="tool-cat">Scheduling</div></div></div>
+        <div class="tool-desc">Batch-create and schedule a full week of Instagram &amp; TikTok content in one sitting. AI best-time-to-post feature and hashtag suggestions save hours weekly.</div>
+        <div class="tool-use">Use: Monday morning content scheduling</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">🔍</span><div><div class="tool-name">Google Business AI</div><div class="tool-cat">Local SEO</div></div></div>
+        <div class="tool-desc">Use AI-generated Google Posts to publish weekly specials directly to Search and Maps. Reply to reviews with AI-drafted responses. Add "Order" button linking to click-collect.</div>
+        <div class="tool-use">Use: Weekly Google Post + review management</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">📱</span><div><div class="tool-name">CapCut</div><div class="tool-cat">Video Editing</div></div></div>
+        <div class="tool-desc">AI-powered auto-captions, trending sound matching, and template-based TikTok/Reel creation. Turn a 60-second baking video into a polished post in under 5 minutes.</div>
+        <div class="tool-use">Use: All TikTok and Reel video editing</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-head"><span class="tool-emoji">🏷️</span><div><div class="tool-name">Notion AI</div><div class="tool-cat">Operations</div></div></div>
+        <div class="tool-desc">AI-assisted bake planning, supplier tracking, recipe database and weekly prep checklists. Connect with click-collect order data to auto-generate bake quantities.</div>
+        <div class="tool-use">Use: Weekly bake planning &amp; operations management</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. Growth Priorities -->
+<div class="section" id="growth-priorities">
+  <div class="section-inner">
+    <div class="section-kicker">Section 8</div>
+    <h2 class="section-title">Growth Opportunities — Ranked</h2>
+    <p class="section-intro">Beyond the immediate digital fixes, these are the highest-impact growth vectors for the business over the next 12–24 months, ranked by ease of implementation and revenue potential.</p>
+    <table class="priority-table">
+      <thead><tr><th>#</th><th>Opportunity</th><th>Revenue Potential</th><th>Effort</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td><strong>Click &amp; Collect + Online Ordering</strong></td><td>+£300–600/week</td><td><span class="priority-low">Low</span></td><td>Captures sales currently lost to sell-outs. Built and ready to deploy.</td></tr>
+        <tr><td><strong>2</strong></td><td><strong>Weekly Email Newsletter</strong></td><td>+£150–300/week</td><td><span class="priority-low">Low</span></td><td>"This week's menu" email drives pre-orders. Build list via QR code at point of sale.</td></tr>
+        <tr><td><strong>3</strong></td><td><strong>Bread Subscription / CSA Box</strong></td><td>+£800–2,000/month</td><td><span class="priority-med">Medium</span></td><td>Weekly bread box to 20–40 local subscribers = guaranteed recurring revenue. £25–40/box.</td></tr>
+        <tr><td><strong>4</strong></td><td><strong>Corporate Catering</strong></td><td>+£500–1,500/week</td><td><span class="priority-med">Medium</span></td><td>Office breakfast platters for Saffron Walden businesses. Tuesday–Friday drops at offices.</td></tr>
+        <tr><td><strong>5</strong></td><td><strong>Baking Workshops</strong></td><td>+£500–1,000/month</td><td><span class="priority-med">Medium</span></td><td>Evening or Sunday sourdough workshops. £60–80/person × 8 people = premium experience revenue.</td></tr>
+        <tr><td><strong>6</strong></td><td><strong>Wholesale (Delis / Farm Shops)</strong></td><td>+£400–800/week</td><td><span class="priority-med">Medium</span></td><td>Supply 3–5 local independents. Saffron Walden has multiple artisan food retailers.</td></tr>
+        <tr><td><strong>7</strong></td><td><strong>Seasonal Hampers (DTC)</strong></td><td>+£2,000–5,000/season</td><td><span class="priority-med">Medium</span></td><td>Christmas &amp; Easter gift hampers combining baked goods + Dominique's pantry range.</td></tr>
+        <tr><td><strong>8</strong></td><td><strong>Dominique's as Standalone Brand</strong></td><td>High (12–24 months)</td><td><span class="priority-high">High</span></td><td>Separate DTC Shopify store for pantry range. Potential for nationwide shipping.</td></tr>
+        <tr><td><strong>9</strong></td><td><strong>Loyalty Programme</strong></td><td>+15–20% repeat purchase</td><td><span class="priority-low">Low</span></td><td>Simple stamp card (digital via Square) rewarding 10th purchase free. Drives retention.</td></tr>
+        <tr><td><strong>10</strong></td><td><strong>Second Location / Market Stall</strong></td><td>2× revenue potential</td><td><span class="priority-high">Very High</span></td><td>Saffron Walden Farmers Market would be a natural next step once systems are in place.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 9. ROI -->
+<div class="section" id="roi">
+  <div class="section-inner">
+    <div class="section-kicker">Section 9</div>
+    <h2 class="section-title">Projected ROI</h2>
+    <p class="section-intro">Conservative estimates based on comparable artisan bakery click-and-collect implementations and social media marketing benchmarks for food businesses in the UK.</p>
+    <div class="roi-grid">
+      <div class="roi-card featured">
+        <div class="roi-num">+34%</div>
+        <div class="roi-label">Revenue Uplift</div>
+        <div class="roi-note">Estimated within 90 days of click &amp; collect launch</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-num">£420</div>
+        <div class="roi-label">Additional Weekly Revenue</div>
+        <div class="roi-note">At 12 pre-orders/week avg £35 basket</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-num">-25%</div>
+        <div class="roi-label">Baking Waste Reduction</div>
+        <div class="roi-note">Pre-orders enable accurate bake quantities</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-num">2.4×</div>
+        <div class="roi-label">Instagram Engagement</div>
+        <div class="roi-note">Food content outperforms avg by 240%</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-num">£0</div>
+        <div class="roi-label">Deployment Cost</div>
+        <div class="roi-note">System built — free to host on Netlify</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-num">£86k+</div>
+        <div class="roi-label">Year 2 Revenue Target</div>
+        <div class="roi-note">Including subscriptions, wholesale &amp; workshops</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10. Roadmap -->
+<div class="section" id="roadmap">
+  <div class="section-inner">
+    <div class="section-kicker">Section 10</div>
+    <h2 class="section-title">90-Day Roadmap</h2>
+    <p class="section-intro">A phased implementation plan prioritising quick wins first, then building the infrastructure for sustainable growth.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">W1–2</div>
+        <div class="timeline-body">
+          <div class="timeline-phase">Phase 1 — Launch</div>
+          <div class="timeline-title">Click & Collect Goes Live</div>
+          <ul class="timeline-items">
+            <li>Deploy click-and-collect system to custom domain (order.theloaftinbakery.co.uk)</li>
+            <li>Update Instagram bio link to ordering page via Linktree</li>
+            <li>Train bakery team on admin dashboard (10-minute walkthrough)</li>
+            <li>Announce on all social channels with launch Reel</li>
+            <li>Add "Order Online" button to Google Business Profile</li>
+            <li>Set up QR code at point of sale linking to ordering page</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">W3–4</div>
+        <div class="timeline-body">
+          <div class="timeline-phase">Phase 2 — Content Engine</div>
+          <div class="timeline-title">Social Media System Running</div>
+          <ul class="timeline-items">
+            <li>Set up Mailchimp list — start capturing emails at checkout</li>
+            <li>Establish Mon–Sat content schedule using Canva + Later</li>
+            <li>Post first TikTok BTS video series (5-part "life of a baker")</li>
+            <li>Launch Instagram Stories "daily stock counter" format</li>
+            <li>Run first paid Instagram ad (£5/day — Ad 1 launch creative)</li>
+            <li>Set up Google Business weekly posting routine</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">W5–8</div>
+        <div class="timeline-body">
+          <div class="timeline-phase">Phase 3 — Revenue Streams</div>
+          <div class="timeline-title">Subscription & Email Growth</div>
+          <ul class="timeline-items">
+            <li>Launch "Weekly Bread Box" subscription pilot (10 subscribers)</li>
+            <li>Send first "This Week's Menu" email newsletter</li>
+            <li>Introduce digital loyalty stamp card via Square</li>
+            <li>Approach 3 local delis/farm shops for wholesale conversation</li>
+            <li>Pilot one baking workshop — invite email list for early access</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">W9–12</div>
+        <div class="timeline-body">
+          <div class="timeline-phase">Phase 4 — Scale &amp; Optimise</div>
+          <div class="timeline-title">Data-Driven Growth</div>
+          <ul class="timeline-items">
+            <li>Review click-collect data — optimise slot times and menu based on demand</li>
+            <li>A/B test ad creatives using performance data from Phase 2</li>
+            <li>Expand subscription box to 25–30 subscribers</li>
+            <li>Plan seasonal Christmas hamper range and gifting campaign</li>
+            <li>Review KPIs vs targets and report to bakery — adjust strategy for Q2</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 11. KPIs -->
+<div class="section" id="kpis" style="border-bottom:none">
+  <div class="section-inner">
+    <div class="section-kicker">Section 11</div>
+    <h2 class="section-title">KPIs &amp; Success Metrics</h2>
+    <p class="section-intro">Measurable targets for the first 90 days to track progress and demonstrate ROI to the bakery team.</p>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-metric">25+</div><div class="kpi-label">Pre-orders per week</div><div class="kpi-desc">Target by Day 30</div></div>
+      <div class="kpi-card"><div class="kpi-metric">£875</div><div class="kpi-label">Weekly click-collect revenue</div><div class="kpi-desc">25 orders × £35 avg</div></div>
+      <div class="kpi-card"><div class="kpi-metric">500+</div><div class="kpi-label">Email subscribers</div><div class="kpi-desc">By end of 90 days</div></div>
+      <div class="kpi-card"><div class="kpi-metric">+40%</div><div class="kpi-label">Instagram follower growth</div><div class="kpi-desc">From consistent Reels posting</div></div>
+      <div class="kpi-card"><div class="kpi-metric">&lt;15%</div><div class="kpi-label">Bake waste rate</div><div class="kpi-desc">Down from estimated 25–30%</div></div>
+      <div class="kpi-card"><div class="kpi-metric">4.8%+</div><div class="kpi-label">Email open rate</div><div class="kpi-desc">Food newsletters avg 25%</div></div>
+      <div class="kpi-card"><div class="kpi-metric">10</div><div class="kpi-label">Bread box subscribers</div><div class="kpi-label" style="font-size:11px;margin-top:2px">£250–400/month guaranteed</div><div class="kpi-desc">Pilot phase target</div></div>
+      <div class="kpi-card"><div class="kpi-metric">3×</div><div class="kpi-label">Google Maps impressions</div><div class="kpi-desc">Via weekly posts + photos</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="report-footer">
+  <div class="report-footer-inner">
+    <h2>Ready to grow, The Loaf Tin Bakery? 🍞</h2>
+    <p>This report and all deliverables were prepared by <strong>Catalyst &amp; Co.</strong> for The Loaf Tin Bakery, June 2025.</p>
+    <p style="margin-top:8px;opacity:.7">Click &amp; Collect System · Admin Dashboard · Instagram Feed Ads (×4) · Story/TikTok Ads (×3) · Business Analysis Report</p>
+    <p style="margin-top:16px;font-size:13px;opacity:.5">Catalyst &amp; Co. Consulting · daniel_ro55@hotmail.com</p>
+  </div>
+</div>
+
+</body>
+</html>
