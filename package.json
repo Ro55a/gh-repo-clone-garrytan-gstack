@@ -1,0 +1,13 @@
+{
+  "name": "case-coach-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CLI agent that scores a case interview response with Claude using a fixed rubric",
+  "main": "case-coach-agent-simple.js",
+  "scripts": {
+    "start": "node case-coach-agent-simple.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0"
+  }
+}
