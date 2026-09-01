@@ -185,6 +185,7 @@ HTML_TEMPLATE = """<!doctype html>
   .pill-verify { background: rgba(180,140,255,0.15); color: var(--purple); }
   .pill-watch { background: rgba(106,114,134,0.2); color: var(--text-dim); }
   .pill-closed { background: rgba(239,90,111,0.15); color: var(--red); }
+  .pill-speculative { background: rgba(91,140,255,0.15); color: var(--accent); }
 
   .fit { font-weight: 700; }
   .company { font-weight: 650; }
@@ -278,6 +279,7 @@ function statusPillClass(status) {
     case 'verify': return 'pill-verify';
     case 'watch': return 'pill-watch';
     case 'closed': return 'pill-closed';
+    case 'speculative': return 'pill-speculative';
     default: return 'pill-watch';
   }
 }
