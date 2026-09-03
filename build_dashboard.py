@@ -239,6 +239,7 @@ HTML_TEMPLATE = """<!doctype html>
         <th data-key="title">Title</th>
         <th data-key="type">Category</th>
         <th data-key="status">Status</th>
+        <th data-key="_opensSort">Opens</th>
         <th data-key="deadline_date">Deadline</th>
         <th data-key="fit_score">Fit</th>
         <th data-key="date_confidence">Date conf.</th>
@@ -296,6 +297,10 @@ roles.forEach(r => {
   r._days = daysLeft(r.deadline_date);
   r._urgent = r.status === 'Open' && r._days !== null && r._days >= 0 && r._days < 14;
   r._unconfirmed = (r.date_confidence === 'unconfirmed') || (!r.deadline_date && !r.opens_date && r.status !== 'Closed');
+  // Sort/display key for the Opens column: confirmed this-cycle opens_date first,
+  // then last cycle's opens_date_prior_cycle as a fallback signal, then last.
+  r._opensSort = r.opens_date || (r.opens_date_prior_cycle ? '9' + r.opens_date_prior_cycle : '99999999');
+  r._opensIsPrior = !r.opens_date && !!r.opens_date_prior_cycle;
 });
 
 // ---- summary cards ----
@@ -334,7 +339,7 @@ typeSet.forEach(t => { const o = document.createElement('option'); o.value = t; 
 statusSet.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; statusFilter.appendChild(o); });
 
 // ---- state ----
-let state = { search: '', type: '', status: '', cardFilter: 'all', sortKey: 'deadline_date', sortDir: 1 };
+let state = { search: '', type: '', status: '', cardFilter: 'all', sortKey: '_opensSort', sortDir: 1 };
 
 document.getElementById('searchBox').addEventListener('input', e => { state.search = e.target.value.toLowerCase(); render(); });
 typeFilter.addEventListener('change', e => { state.type = e.target.value; render(); });
@@ -410,7 +415,11 @@ function render() {
     tr.className = 'role-row';
     const deadlineText = r.deadline_date
       ? escapeHtml(r.deadline_date) + (r._days !== null ? ' <span class="days-left' + (r._urgent ? ' days-urgent' : '') + '">(' + (r._days >= 0 ? r._days + 'd left' : 'passed') + ')</span>' : '')
-      : (r.opens_date ? 'opens ' + escapeHtml(r.opens_date) : '<span class="flag">rolling / TBC</span>');
+      : '<span class="flag">TBC</span>';
+
+    const opensText = r.opens_date
+      ? escapeHtml(r.opens_date)
+      : (r.opens_date_prior_cycle ? '<span class="flag">~' + escapeHtml(r.opens_date_prior_cycle) + ' last cyc.</span>' : '<span class="flag">TBC</span>');
 
     const appliedBadge = r.application_status === 'Applied'
       ? ' <span class="applied-badge" title="Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '') + '">&#10003; Applied</span>'
@@ -421,13 +430,14 @@ function render() {
       '<td class="title-cell">' + escapeHtml(r.title) + '</td>' +
       '<td>' + escapeHtml(r.type || '') + '</td>' +
       '<td><span class="pill ' + statusPillClass(r.status) + '">' + escapeHtml(r.status || '') + '</span></td>' +
+      '<td>' + opensText + '</td>' +
       '<td>' + deadlineText + '</td>' +
       '<td class="fit">' + ('&#9733;'.repeat(r.fit_score || 0)) + '<span style="color:var(--text-faint)">' + '&#9734;'.repeat(5 - (r.fit_score || 0)) + '</span></td>' +
       '<td><span class="flag' + (r.date_confidence === 'unconfirmed' ? ' warn' : '') + '">' + escapeHtml(r.date_confidence || '') + (r.region_confirmed === false ? ' &middot; region?' : '') + '</span></td>';
 
     const detail = document.createElement('tr');
     detail.className = 'detail-row';
-    detail.innerHTML = '<td colspan="7"><div class="detail-grid">' +
+    detail.innerHTML = '<td colspan="8"><div class="detail-grid">' +
       '<div class="detail-block"><h4>Eligibility</h4><p>' + escapeHtml(r.eligibility || '\\u2014') + '</p></div>' +
       '<div class="detail-block"><h4>Tactical notes</h4><p>' + escapeHtml(r.tactical_notes || '\\u2014') + '</p></div>' +
       '<div class="detail-foot">' +
