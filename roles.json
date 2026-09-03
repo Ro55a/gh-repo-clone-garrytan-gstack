@@ -1447,17 +1447,17 @@
       "title": "Placement Opportunities 2027 - Consulting track",
       "tier": "Tier 3 (Top-10 Mid-tier)",
       "type": "Consulting",
-      "location": "Unconfirmed office - RSM has UK-wide offices, London not explicitly stated for the Consulting track specifically",
+      "location": "Unconfirmed office - RSM has UK-wide offices, London/MK not explicitly stated for the Consulting track specifically",
       "opens_date": "",
       "deadline_date": "",
-      "status": "Opens soon",
+      "status": "Open",
       "fit_score": 3,
-      "eligibility": "Confirmed via WebSearch (Bright Network, TargetJobs, RSM's own careers site): RSM's 2027 placement opportunities across Audit, Tax and Consulting 'will go live in autumn' - we are now in autumn (September), so this should open imminently or may already be live. Requires 112 UCAS points across 3 A-Levels (does not count EPQ) - Daniel's History A + Economics B + Maths C = 120 points, clears this per the same calculation already noted on the RSM Audit entry.",
-      "tactical_notes": "Register interest now at the Bright Network/TargetJobs links so you're notified the moment applications open - this is one of the closer-to-actionable Watch-tier roles. Confirm a specifically London-based Consulting placement is offered once the listing goes live (not just 'RSM UK' generically).",
-      "source": "WebSearch (Bright Network, TargetJobs, careers.rsmuk.com registration page)",
+      "eligibility": "Daniel confirmed directly (2026-09-03) that RSM's 2027 placement applications are now open - upgraded from 'Opens soon'. WebSearch this run still only showed the 'register your interest' framing and couldn't independently pull a live application deadline or confirm the specific office (London/MK) for the Consulting track - Daniel's first-hand check is the better source here. Requires 112 UCAS points across 3 A-Levels (does not count EPQ) - Daniel's History A + Economics B + Maths C = 120 points, clears this per the same calculation already noted on the RSM Audit entry.",
+      "tactical_notes": "Apply now rather than waiting - go directly to careers.rsmuk.com/uk/en/c/consulting-jobs, find the actual application deadline there, and confirm it's a London or Milton Keynes office before committing. Worth checking whether RSM's Audit track (separate entry, rsm-auditassistant-placement-verify) has also gone live for the 2027 cohort while you're there.",
+      "source": "Daniel (direct confirmation, 2026-09-03) + WebSearch (Bright Network, TargetJobs, careers.rsmuk.com)",
       "first_seen": "2026-09-03",
       "region_confirmed": false,
-      "date_confidence": "indicative"
+      "date_confidence": "unconfirmed"
     },
     {
       "id": "networkrail-financeyii-2027-opensoon",
