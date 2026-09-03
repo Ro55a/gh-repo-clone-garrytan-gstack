@@ -1,6 +1,7 @@
 {
   "meta": {
-    "schema_version": "1.0",
+    "schema_version": "1.1",
+    "schema_notes": "v1.1 (2026-09-03) adds application_status ('Not applied' default, or 'Applied') and applied_date to every role - Daniel started actually applying, so the dashboard now tracks that too (visible as a card, a filter, a green badge in the table, and a line in each role's detail view). Only set these two fields when Daniel says he's applied - never mark a role Applied on Claude's own inference.",
     "last_updated": "2026-09-03",
     "last_discovery_run": "2026-09-03",
     "sourcing_rules": "Region in scope as of 2026-09-03: London OR Milton Keynes/near Milton Keynes (Daniel can travel to MK) - a role only needs to be based in one of these, not both; a role based in neither (e.g. Manchester, Swindon, Leeds) stays out of scope even if a firm also has a London or MK office for other roles - always check the SPECIFIC role's location, not just the firm's general footprint. Dates are only recorded from a region-specific source (the firm's own regional posting or careers page stating London or Milton Keynes). date_confidence: 'confirmed' = regional page/posting states this cycle explicitly; 'indicative' = regional source but rolling/prior-cycle/no year stated, or found via a search-engine summary of the regional posting rather than a direct fetch; 'unconfirmed' = no regional source seen yet, date fields left empty; 'not_applicable' = there is no scheme/date to confirm at all (used for Speculative-status entries where no formal placement track exists, as opposed to 'unconfirmed' which implies a scheme exists but its date wasn't found). Never alert on unconfirmed or not_applicable dates. Foreign-market (non-UK) dates are marked not_applicable rather than recorded. status: 'Speculative' is a fifth status alongside Open/Opens soon/Verify/Watch/Closed - for a real, London-relevant, small/boutique firm in scope (Consulting/Finance/AM/IB/Risk-Audit) where no live or historical Industrial Placement/Year-in-Industry posting could be found at all, but the firm is small enough that a direct, speculative approach (not an online application) is a realistic route in. Only add a Speculative entry when you can name a genuine reason the firm fits (sector, size, known to hire junior talent in some form) - never invent a firm with no real basis. eligibility for a Speculative entry should explain why no formal scheme was found; tactical_notes MUST include a concrete contact plan: who to approach (a named role, e.g. 'HR/Talent contact' or 'a partner in their [team] via LinkedIn'), which channel (email/LinkedIn InMail/phone), and what to lead with (a one-line pitch tailored to the firm, referencing Daniel's differentiators). Speculative entries never get invented dates and are excluded from the urgent-deadline alert logic the same as any unconfirmed-date role.",
@@ -54,8 +55,18 @@
     "target": {
       "region": "London, plus Milton Keynes / near Milton Keynes (added 2026-09-03 - Daniel can travel there). A role only needs to be based in one of these, not both.",
       "primary": "Consulting",
-      "also": ["Finance", "Asset Management", "Investment Banking", "Risk/Auditing"],
-      "always_include_firms": ["Deloitte", "KPMG", "PwC", "EY"],
+      "also": [
+        "Finance",
+        "Asset Management",
+        "Investment Banking",
+        "Risk/Auditing"
+      ],
+      "always_include_firms": [
+        "Deloitte",
+        "KPMG",
+        "PwC",
+        "EY"
+      ],
       "instruction": "Cast wide across every firm in scope, discovered fresh each run - never limited to a fixed shortlist.",
       "region_history_note": "2026-09-03: region scope widened from 'London only' to 'London OR Milton Keynes/near Milton Keynes' at Daniel's request (he can travel to MK). This was prompted by the Mercedes-AMG Petronas F1 Team Finance placement he named (Brackley, Northamptonshire, ~20 miles/30-40 min from Milton Keynes) - it now qualifies naturally as 'near Milton Keynes' rather than needing a one-off exception. Still apply the region rule strictly: a role must be in London or in/near Milton Keynes specifically, not just 'somewhere in the UK' or at a firm that happens to also have a London/MK office for other roles."
     },
@@ -89,7 +100,9 @@
       "source": "Indeed (Nomura primary posting, fetched via Indeed job details)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "ubs-globalbanking-ip-2027",
@@ -107,7 +120,9 @@
       "source": "Indeed (UBS primary posting, fetched via Indeed job details, ref 341487BR)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "ubs-am-cooandcc-ip-2027",
@@ -125,7 +140,9 @@
       "source": "Indeed (UBS primary posting, fetched via Indeed job details, ref 342876BR)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "ubs-am-investments-ip-2027",
@@ -143,7 +160,9 @@
       "source": "Indeed (UBS primary posting, fetched via Indeed job details, ref 342854BR)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "blackrock-placement-emea-2027",
@@ -161,7 +180,9 @@
       "source": "Indeed (BlackRock primary posting, fetched via Indeed job details, req #12229)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "goldmansachs-am-realestate-offcycle-2027",
@@ -179,7 +200,9 @@
       "source": "WebSearch (higher.gs.com role listing, title includes 'London')",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "goldmansachs-wealthmanagement-workplacement-2027",
@@ -197,7 +220,9 @@
       "source": "Indeed search listing + WebSearch (goldmansachs.com/careers Work Placement Programme page)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "goldmansachs-internalaudit-workplacement-2027",
@@ -215,7 +240,9 @@
       "source": "Indeed search listing + WebSearch (goldmansachs.com/careers Work Placement Programme page)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "zurich-actuarial-ip-verify",
@@ -233,7 +260,9 @@
       "source": "WebSearch (Bright Network, 2025 and 2026 postings)",
       "first_seen": "2026-09-01",
       "region_confirmed": false,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "hsbc-wpb-ip-watch",
@@ -251,7 +280,9 @@
       "source": "WebSearch (Bright Network, Extern)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "deloitte-ip-watch",
@@ -269,7 +300,9 @@
       "source": "WebSearch summary of Deloitte UK Early Careers pages",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "kpmg-ip-watch",
@@ -287,7 +320,9 @@
       "source": "WebSearch summary (KPMG careers / Higherin)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "pwc-ip-watch",
@@ -305,7 +340,9 @@
       "source": "WebSearch summary (PwC careers / the-trackr)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "ey-ip-watch",
@@ -323,7 +360,9 @@
       "source": "WebSearch (prospects.ac.uk / ey.com summary)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "paconsulting-delivery-ip-watch",
@@ -341,7 +380,9 @@
       "source": "WebSearch (paconsulting.com / Bright Network summary)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "cartesian-strategy-ip-watch",
@@ -359,7 +400,9 @@
       "source": "WebSearch (cartesian.com summary)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "smbc-ip-watch",
@@ -377,7 +420,9 @@
       "source": "WebSearch (Bright Network summary)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "bankofengland-ip-watch",
@@ -395,7 +440,9 @@
       "source": "WebSearch (bankofengland.co.uk summary)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "morganstanley-salestrading-ip-watch",
@@ -413,7 +460,9 @@
       "source": "WebSearch (Morgan Stanley Campus / Bright Network / Prosple summaries, prior-cycle postings)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "wellington-management-ip-emea-watch",
@@ -431,7 +480,9 @@
       "source": "WebSearch (Bright Network / Wellington Workday postings, prior-cycle)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "fticonsulting-econfinancial-ip-watch",
@@ -449,7 +500,9 @@
       "source": "WebSearch (FTI Consulting careers posting, prior-cycle)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "moorekingstonsmith-audit-ip-watch",
@@ -467,7 +520,9 @@
       "source": "WebSearch (Bright Network / Prosple, prior-cycle postings)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "forvismazars-insuranceriskconsulting-watch",
@@ -485,7 +540,9 @@
       "source": "WebSearch (Bright Network / careers-uk.forvismazars.com)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "paconsulting-businessdesign-ip-watch",
@@ -503,7 +560,9 @@
       "source": "WebSearch (paconsulting.com / consultancy.uk summary)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "grantthornton-audit-ip-watch",
@@ -521,7 +580,9 @@
       "source": "WebSearch (Bright Network, prior-cycle postings)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "bdo-audit-ip-watch",
@@ -539,7 +600,9 @@
       "source": "WebSearch (targetjobs.co.uk / Prosple, prior-cycle postings)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "rsm-auditassistant-placement-verify",
@@ -557,7 +620,9 @@
       "source": "WebSearch (careers.rsmuk.com / Bright Network / Prosple)",
       "first_seen": "2026-09-01",
       "region_confirmed": false,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "natwest-risk-ip-watch",
@@ -575,7 +640,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "nationwide-risk-internship-verify",
@@ -593,7 +660,9 @@
       "source": "WebSearch (Bright Network)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "alvarezmarsal-restructuring-ip-watch",
@@ -611,7 +680,9 @@
       "source": "WebSearch (Bright Network, 2024 and 2026 postings)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "lazard-financialadvisory-ip-watch",
@@ -629,7 +700,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "rothschild-debtadvisory-longterm-verify",
@@ -647,7 +720,9 @@
       "source": "WebSearch (Bright Network)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "ubs-groupriskcontrol-ip-watch",
@@ -665,7 +740,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "accenture-consulting-ip-watch",
@@ -683,7 +760,9 @@
       "source": "WebSearch (Bright Network / Prosple, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "barclays-hr-ip-watch",
@@ -701,7 +780,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "aon-pensionsindustrial-verify",
@@ -719,7 +800,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": false,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "aon-investmentconsulting-verify",
@@ -737,7 +820,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": false,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "oxfordproperties-finance-ip-watch",
@@ -755,7 +840,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "morganstanley-finance-ip-watch",
@@ -773,7 +860,9 @@
       "source": "WebSearch (Bright Network, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "travelers-actuarial-placement-verify",
@@ -791,7 +880,9 @@
       "source": "WebSearch (Bright Network, LinkedIn, StudySmarter listings)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "oxfordeconomics-placement-watch",
@@ -809,7 +900,9 @@
       "source": "WebSearch (Oxford Economics careers / Bright Network / Glassdoor, prior-cycle posting)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "mako-hr-ip-watch",
@@ -827,7 +920,9 @@
       "source": "WebSearch (LinkedIn, Glassdoor)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "hymansrobertson-ip-lowconfidence",
@@ -845,7 +940,9 @@
       "source": "WebSearch (Bright Network 2020 posting, actuarialcareers.co.uk, Gradcracker)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "paconsulting-operationsimprovement-ip-watch",
@@ -863,7 +960,9 @@
       "source": "WebSearch (paconsulting.com / smartrecruiters.com summary)",
       "first_seen": "2026-09-01",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "hayfin-internship-verify",
@@ -881,7 +980,9 @@
       "source": "WebSearch (hayfin.com)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "alcentra-speculative",
@@ -899,7 +1000,9 @@
       "source": "WebSearch (alcentra.com, company profile only, no scheme evidence)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "muzinich-speculative",
@@ -917,7 +1020,9 @@
       "source": "WebSearch (muzinich.com, company profile only)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "alantra-speculative",
@@ -935,7 +1040,9 @@
       "source": "WebSearch (alantra.com)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "cavendish-speculative",
@@ -953,7 +1060,9 @@
       "source": "WebSearch (cavendish.com, oaklins.com)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "gcaaltium-speculative",
@@ -971,7 +1080,9 @@
       "source": "WebSearch (GCA Altium company profile, no scheme evidence)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "waverton-speculative",
@@ -989,7 +1100,9 @@
       "source": "WebSearch (Wikipedia, company profile only)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "bovillnewgate-speculative",
@@ -1007,7 +1120,9 @@
       "source": "WebSearch (bovill.the-escape.work, consultancy.uk, efinancialcareers.co.uk)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "thistleinitiatives-speculative",
@@ -1025,7 +1140,9 @@
       "source": "WebSearch (thistleinitiatives.co.uk)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "inigo-speculative",
@@ -1043,7 +1160,9 @@
       "source": "WebSearch (Inigo company profile, CB Insights)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "convex-speculative",
@@ -1061,7 +1180,9 @@
       "source": "WebSearch (convexin.com)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "northhighland-academy-ip-watch",
@@ -1079,7 +1200,9 @@
       "source": "WebSearch (Bright Network, careers.northhighland.com, prior-cycle posting)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "curzonconsulting-speculative",
@@ -1097,7 +1220,9 @@
       "source": "WebSearch (Glassdoor, Management Consulted, consultancy.uk, curzonconsulting.com)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "fenchurchadvisory-speculative",
@@ -1115,7 +1240,9 @@
       "source": "WebSearch (fenchurchadvisory.com)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "controlrisks-speculative",
@@ -1133,7 +1260,9 @@
       "source": "WebSearch (Wikipedia, Manchester careers service, controlrisks.com)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "elixirr-speculative",
@@ -1151,7 +1280,9 @@
       "source": "WebSearch (elixirr.com, consultancy.uk, MarketScreener)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "rolandberger-speculative",
@@ -1169,7 +1300,9 @@
       "source": "WebSearch (Bright Network, Prosple)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "rbbeconomics-speculative",
@@ -1187,7 +1320,9 @@
       "source": "WebSearch (rbbecon.com/careers)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "vixio-verify",
@@ -1205,7 +1340,9 @@
       "source": "WebSearch (vixio.com/careers)",
       "first_seen": "2026-09-02",
       "region_confirmed": false,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "unconfirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "newtoneurope-speculative",
@@ -1223,7 +1360,9 @@
       "source": "WebSearch (consultancy.uk, company profile only)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "baringa-speculative",
@@ -1241,7 +1380,9 @@
       "source": "WebSearch (baringa.com, consultancy.uk, company profile - no scheme evidence across two separate passes)",
       "first_seen": "2026-09-02",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "kroll-forensicinvestigations-speculative",
@@ -1259,7 +1400,9 @@
       "source": "WebSearch (Bright Network, careers.kroll.com)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "k2integrity-speculative",
@@ -1277,7 +1420,9 @@
       "source": "WebSearch (Wikipedia, k2integrity.com)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "livingstonepartners-speculative",
@@ -1295,7 +1440,9 @@
       "source": "WebSearch (livingstonepartners.com, consultancy.org)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "translinkcf-speculative",
@@ -1313,7 +1460,9 @@
       "source": "WebSearch (translinkcf.uk)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "oghmapartners-speculative",
@@ -1331,7 +1480,9 @@
       "source": "WebSearch (LinkedIn company profile)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "troyassetmanagement-speculative",
@@ -1349,7 +1500,9 @@
       "source": "WebSearch (taml.co.uk, company profile only)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "rwcpartners-speculative",
@@ -1367,7 +1520,9 @@
       "source": "WebSearch (company profile only)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "schroders-internalaudit-placementyear-2027",
@@ -1385,7 +1540,9 @@
       "source": "Indeed (Schroders primary posting, fetched via Indeed job details)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "schroders-corporateregulatorychange-placementyear-2027",
@@ -1403,7 +1560,9 @@
       "source": "Indeed (Schroders primary posting, fetched via Indeed job details)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "schroders-businesstransformation-placementyear-2027",
@@ -1421,7 +1580,9 @@
       "source": "Indeed (Schroders primary posting, fetched via Indeed job details)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "confirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "mercedesamgf1-finance-ip-verify",
@@ -1439,7 +1600,9 @@
       "source": "WebSearch (mercedesamgf1.com summaries) + Indeed (related Programme Operations posting, req 835, confirms programme dates/structure)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "rsm-consulting-placement2027-opensoon",
@@ -1448,16 +1611,18 @@
       "tier": "Tier 3 (Top-10 Mid-tier)",
       "type": "Consulting",
       "location": "Unconfirmed office - RSM has UK-wide offices, London/MK not explicitly stated for the Consulting track specifically",
-      "opens_date": "",
+      "opens_date": "2026-09-01",
       "deadline_date": "",
       "status": "Open",
       "fit_score": 3,
-      "eligibility": "Daniel confirmed directly (2026-09-03) that RSM's 2027 placement applications are now open - upgraded from 'Opens soon'. WebSearch this run still only showed the 'register your interest' framing and couldn't independently pull a live application deadline or confirm the specific office (London/MK) for the Consulting track - Daniel's first-hand check is the better source here. Requires 112 UCAS points across 3 A-Levels (does not count EPQ) - Daniel's History A + Economics B + Maths C = 120 points, clears this per the same calculation already noted on the RSM Audit entry.",
-      "tactical_notes": "Apply now rather than waiting - go directly to careers.rsmuk.com/uk/en/c/consulting-jobs, find the actual application deadline there, and confirm it's a London or Milton Keynes office before committing. Worth checking whether RSM's Audit track (separate entry, rsm-auditassistant-placement-verify) has also gone live for the 2027 cohort while you're there.",
-      "source": "Daniel (direct confirmation, 2026-09-03) + WebSearch (Bright Network, TargetJobs, careers.rsmuk.com)",
+      "eligibility": "Daniel confirmed directly that RSM's 2027 Consulting placement opened 1 Sept 2026 (WebSearch's 'register interest' framing undersold how close it actually was to live). Requires 112 UCAS points across 3 A-Levels (does not count EPQ) - Daniel's History A + Economics B + Maths C = 120 points, clears this per the same calculation already noted on the RSM Audit entry.",
+      "tactical_notes": "Daniel has already applied (2026-09-03). Still worth finding the exact application deadline and confirming the office (London or Milton Keynes) at careers.rsmuk.com/uk/en/c/consulting-jobs for reference. Worth checking whether RSM's Audit track (separate entry, rsm-auditassistant-placement-verify) has also gone live for the 2027 cohort.",
+      "source": "Daniel (direct confirmation of open date and submitted application, 2026-09-03) + WebSearch (Bright Network, TargetJobs, careers.rsmuk.com)",
       "first_seen": "2026-09-03",
       "region_confirmed": false,
-      "date_confidence": "unconfirmed"
+      "date_confidence": "confirmed",
+      "application_status": "Applied",
+      "applied_date": "2026-09-03"
     },
     {
       "id": "networkrail-financeyii-2027-opensoon",
@@ -1475,7 +1640,9 @@
       "source": "WebSearch (networkrail.co.uk/careers, earlycareers.networkrail.co.uk, Prosple, Bright Network)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "santanderuk-risk-mk-watch",
@@ -1493,7 +1660,9 @@
       "source": "WebSearch (Bright Network, santander.com/careers)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "indicative"
+      "date_confidence": "indicative",
+      "application_status": "Not applied",
+      "applied_date": ""
     },
     {
       "id": "allicabank-speculative",
@@ -1511,7 +1680,9 @@
       "source": "WebSearch (Wikipedia, company profile only)",
       "first_seen": "2026-09-03",
       "region_confirmed": true,
-      "date_confidence": "not_applicable"
+      "date_confidence": "not_applicable",
+      "application_status": "Not applied",
+      "applied_date": ""
     }
   ]
 }

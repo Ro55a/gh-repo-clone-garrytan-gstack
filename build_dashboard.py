@@ -93,11 +93,12 @@ HTML_TEMPLATE = """<!doctype html>
 
   .cards {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 12px;
     margin-bottom: 22px;
   }
-  @media (max-width: 820px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 980px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 520px) { .cards { grid-template-columns: repeat(2, 1fr); } }
   .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -191,6 +192,11 @@ HTML_TEMPLATE = """<!doctype html>
   .company { font-weight: 650; }
   .title-cell { color: var(--text); }
   .company-sub { color: var(--text-faint); font-size: 11.5px; }
+  .applied-badge {
+    display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px;
+    background: rgba(62,207,142,0.15); color: var(--green); font-size: 10.5px; font-weight: 700;
+    vertical-align: middle;
+  }
   .days-left { font-size: 11.5px; }
   .days-urgent { color: var(--red); font-weight: 700; }
   .flag { font-size: 11px; color: var(--text-faint); }
@@ -216,6 +222,7 @@ HTML_TEMPLATE = """<!doctype html>
     <div class="card amber" data-filter="status:Opens soon"><div class="num" id="cardOpeningSoon">0</div><div class="label">Opening soon</div></div>
     <div class="card red" data-filter="urgent"><div class="num" id="cardClosingSoon">0</div><div class="label">Closing soon (&lt;14 days)</div></div>
     <div class="card purple" data-filter="unconfirmed"><div class="num" id="cardUnconfirmed">0</div><div class="label">Unconfirmed dates</div></div>
+    <div class="card green" data-filter="applied"><div class="num" id="cardApplied">0</div><div class="label">Applied</div></div>
   </div>
 
   <div class="toolbar">
@@ -297,12 +304,14 @@ const openCount = roles.filter(r => r.status === 'Open').length;
 const openingSoonCount = roles.filter(r => r.status === 'Opens soon').length;
 const closingSoonCount = roles.filter(r => r._urgent).length;
 const unconfirmedCount = roles.filter(r => r._unconfirmed).length;
+const appliedCount = roles.filter(r => r.application_status === 'Applied').length;
 
 document.getElementById('cardTotal').textContent = total;
 document.getElementById('cardOpen').textContent = openCount;
 document.getElementById('cardOpeningSoon').textContent = openingSoonCount;
 document.getElementById('cardClosingSoon').textContent = closingSoonCount;
 document.getElementById('cardUnconfirmed').textContent = unconfirmedCount;
+document.getElementById('cardApplied').textContent = appliedCount;
 
 // ---- urgent banner ----
 const urgentRoles = roles.filter(r => r._urgent).sort((a,b) => a._days - b._days);
@@ -356,6 +365,7 @@ function passesCardFilter(r) {
     case 'status:Opens soon': return r.status === 'Opens soon';
     case 'urgent': return r._urgent;
     case 'unconfirmed': return r._unconfirmed;
+    case 'applied': return r.application_status === 'Applied';
     default: return true;
   }
 }
@@ -402,8 +412,12 @@ function render() {
       ? escapeHtml(r.deadline_date) + (r._days !== null ? ' <span class="days-left' + (r._urgent ? ' days-urgent' : '') + '">(' + (r._days >= 0 ? r._days + 'd left' : 'passed') + ')</span>' : '')
       : (r.opens_date ? 'opens ' + escapeHtml(r.opens_date) : '<span class="flag">rolling / TBC</span>');
 
+    const appliedBadge = r.application_status === 'Applied'
+      ? ' <span class="applied-badge" title="Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '') + '">&#10003; Applied</span>'
+      : '';
+
     tr.innerHTML =
-      '<td><div class="company">' + escapeHtml(r.company) + '</div><div class="company-sub">' + escapeHtml(r.tier || '') + '</div></td>' +
+      '<td><div class="company">' + escapeHtml(r.company) + appliedBadge + '</div><div class="company-sub">' + escapeHtml(r.tier || '') + '</div></td>' +
       '<td class="title-cell">' + escapeHtml(r.title) + '</td>' +
       '<td>' + escapeHtml(r.type || '') + '</td>' +
       '<td><span class="pill ' + statusPillClass(r.status) + '">' + escapeHtml(r.status || '') + '</span></td>' +
@@ -420,6 +434,7 @@ function render() {
         '<span><b>Source:</b> ' + escapeHtml(r.source || '\\u2014') + '</span>' +
         '<span><b>First seen:</b> ' + escapeHtml(r.first_seen || '\\u2014') + '</span>' +
         '<span><b>Region confirmed:</b> ' + (r.region_confirmed ? 'yes' : 'no') + '</span>' +
+        '<span><b>Application:</b> ' + (r.application_status === 'Applied' ? ('Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '')) : 'Not applied yet') + '</span>' +
         '<span><b>ID:</b> ' + escapeHtml(r.id || '') + '</span>' +
       '</div></div></td>';
 
