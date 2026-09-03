@@ -1655,8 +1655,8 @@
       "first_seen": "2026-09-03",
       "region_confirmed": true,
       "date_confidence": "confirmed",
-      "application_status": "Not applied",
-      "applied_date": "",
+      "application_status": "Applied",
+      "applied_date": "2026-09-03",
       "opens_date_prior_cycle": "2025-10-15"
     },
     {
