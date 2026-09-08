@@ -1,7 +1,7 @@
 {
   "meta": {
-    "schema_version": "1.2",
-    "schema_notes": "v1.1 (2026-09-03) adds application_status ('Not applied' default, or 'Applied') and applied_date to every role - Daniel started actually applying, so the dashboard now tracks that too (visible as a card, a filter, a green badge in the table, and a line in each role's detail view). Only set these two fields when Daniel says he's applied - never mark a role Applied on Claude's own inference. v1.2 (2026-09-03) adds opens_date_prior_cycle to every role - when Daniel pasted a full Trackr export, most rows had no current-cycle (2027) opens/deadline date yet but did have last cycle's (2026) opens date, which is a useful signal for when to expect the 2027 posting. The table's default sort and a dedicated 'Opens' column now surface this.",
+    "schema_version": "1.3",
+    "schema_notes": "v1.1 (2026-09-03) adds application_status ('Not applied' default, or 'Applied') and applied_date to every role - Daniel started actually applying, so the dashboard now tracks that too (visible as a card, a filter, a green badge in the table, and a line in each role's detail view). Only set these two fields when Daniel says he's applied - never mark a role Applied on Claude's own inference. v1.2 (2026-09-03) adds opens_date_prior_cycle to every role - when Daniel pasted a full Trackr export, most rows had no current-cycle (2027) opens/deadline date yet but did have last cycle's (2026) opens date, which is a useful signal for when to expect the 2027 posting. The table's default sort and a dedicated 'Opens' column now surface this. v1.3 (2026-09-08) adds 'Rejected' as a third application_status value (alongside 'Not applied'/'Applied'), plus a rejected_date field - Daniel got his first rejection (AlphaSights) and wants that tracked distinctly from a still-pending application. The 'Applications sent' summary card/filter counts Applied+Rejected together (both represent a submitted application); the table badge and detail view distinguish them (green check vs red cross). As with application_status/applied_date, only set application_status to 'Rejected' or rejected_date when Daniel says so directly - never infer it.",
     "last_updated": "2026-09-08",
     "last_discovery_run": "2026-09-08",
     "sourcing_rules": "Region in scope as of 2026-09-03: London OR Milton Keynes/near Milton Keynes (Daniel can travel to MK) - a role only needs to be based in one of these, not both; a role based in neither (e.g. Manchester, Swindon, Leeds) stays out of scope even if a firm also has a London or MK office for other roles - always check the SPECIFIC role's location, not just the firm's general footprint. Dates are only recorded from a region-specific source (the firm's own regional posting or careers page stating London or Milton Keynes). date_confidence: 'confirmed' = regional page/posting states this cycle explicitly; 'indicative' = regional source but rolling/prior-cycle/no year stated, or found via a search-engine summary of the regional posting rather than a direct fetch; 'unconfirmed' = no regional source seen yet, date fields left empty; 'not_applicable' = there is no scheme/date to confirm at all (used for Speculative-status entries where no formal placement track exists, as opposed to 'unconfirmed' which implies a scheme exists but its date wasn't found). Never alert on unconfirmed or not_applicable dates. Foreign-market (non-UK) dates are marked not_applicable rather than recorded. status: 'Speculative' is a fifth status alongside Open/Opens soon/Verify/Watch/Closed - for a real, London-relevant, small/boutique firm in scope (Consulting/Finance/AM/IB/Risk-Audit) where no live or historical Industrial Placement/Year-in-Industry posting could be found at all, but the firm is small enough that a direct, speculative approach (not an online application) is a realistic route in. Only add a Speculative entry when you can name a genuine reason the firm fits (sector, size, known to hire junior talent in some form) - never invent a firm with no real basis. eligibility for a Speculative entry should explain why no formal scheme was found; tactical_notes MUST include a concrete contact plan: who to approach (a named role, e.g. 'HR/Talent contact' or 'a partner in their [team] via LinkedIn'), which channel (email/LinkedIn InMail/phone), and what to lead with (a one-line pitch tailored to the firm, referencing Daniel's differentiators). Speculative entries never get invented dates and are excluded from the urgent-deadline alert logic the same as any unconfirmed-date role.",
@@ -103,7 +103,8 @@
       "date_confidence": "confirmed",
       "application_status": "Applied",
       "applied_date": "2026-09-03",
-      "opens_date_prior_cycle": "2025-09-05"
+      "opens_date_prior_cycle": "2025-09-05",
+      "rejected_date": ""
     },
     {
       "id": "ubs-globalbanking-ip-2027",
@@ -124,7 +125,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "ubs-am-cooandcc-ip-2027",
@@ -145,7 +147,8 @@
       "date_confidence": "confirmed",
       "application_status": "Applied",
       "applied_date": "2026-09-03",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "ubs-am-investments-ip-2027",
@@ -166,7 +169,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "blackrock-placement-emea-2027",
@@ -187,7 +191,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-07-01"
+      "opens_date_prior_cycle": "2025-07-01",
+      "rejected_date": ""
     },
     {
       "id": "goldmansachs-am-realestate-offcycle-2027",
@@ -208,7 +213,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "goldmansachs-wealthmanagement-workplacement-2027",
@@ -229,7 +235,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-08-20"
+      "opens_date_prior_cycle": "2025-08-20",
+      "rejected_date": ""
     },
     {
       "id": "goldmansachs-internalaudit-workplacement-2027",
@@ -250,7 +257,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-08-20"
+      "opens_date_prior_cycle": "2025-08-20",
+      "rejected_date": ""
     },
     {
       "id": "zurich-actuarial-ip-verify",
@@ -271,7 +279,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "hsbc-wpb-ip-watch",
@@ -292,7 +301,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "deloitte-ip-watch",
@@ -313,7 +323,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-22"
+      "opens_date_prior_cycle": "2025-09-22",
+      "rejected_date": ""
     },
     {
       "id": "kpmg-ip-watch",
@@ -334,7 +345,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-24"
+      "opens_date_prior_cycle": "2025-09-24",
+      "rejected_date": ""
     },
     {
       "id": "pwc-ip-watch",
@@ -355,7 +367,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-09"
+      "opens_date_prior_cycle": "2025-10-09",
+      "rejected_date": ""
     },
     {
       "id": "ey-ip-watch",
@@ -376,7 +389,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-18"
+      "opens_date_prior_cycle": "2025-09-18",
+      "rejected_date": ""
     },
     {
       "id": "paconsulting-delivery-ip-watch",
@@ -397,7 +411,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-20"
+      "opens_date_prior_cycle": "2025-10-20",
+      "rejected_date": ""
     },
     {
       "id": "cartesian-strategy-ip-watch",
@@ -418,7 +433,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "smbc-ip-watch",
@@ -439,7 +455,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-02"
+      "opens_date_prior_cycle": "2025-10-02",
+      "rejected_date": ""
     },
     {
       "id": "bankofengland-ip-watch",
@@ -460,7 +477,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-27"
+      "opens_date_prior_cycle": "2025-10-27",
+      "rejected_date": ""
     },
     {
       "id": "morganstanley-salestrading-ip-watch",
@@ -481,7 +499,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-01"
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "wellington-management-ip-emea-watch",
@@ -502,7 +521,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "fticonsulting-econfinancial-ip-watch",
@@ -523,7 +543,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-08"
+      "opens_date_prior_cycle": "2025-09-08",
+      "rejected_date": ""
     },
     {
       "id": "moorekingstonsmith-audit-ip-watch",
@@ -544,7 +565,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "forvismazars-insuranceriskconsulting-watch",
@@ -565,7 +587,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "paconsulting-businessdesign-ip-watch",
@@ -586,7 +609,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "grantthornton-audit-ip-watch",
@@ -607,7 +631,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-01"
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "bdo-audit-ip-watch",
@@ -628,7 +653,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-28"
+      "opens_date_prior_cycle": "2026-01-28",
+      "rejected_date": ""
     },
     {
       "id": "rsm-auditassistant-placement-verify",
@@ -649,7 +675,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "natwest-risk-ip-watch",
@@ -670,7 +697,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "nationwide-risk-internship-verify",
@@ -691,7 +719,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "alvarezmarsal-restructuring-ip-watch",
@@ -712,7 +741,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "lazard-financialadvisory-ip-watch",
@@ -733,7 +763,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-13"
+      "opens_date_prior_cycle": "2025-10-13",
+      "rejected_date": ""
     },
     {
       "id": "rothschild-debtadvisory-longterm-verify",
@@ -754,7 +785,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "ubs-groupriskcontrol-ip-watch",
@@ -775,7 +807,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "accenture-consulting-ip-watch",
@@ -796,7 +829,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-10"
+      "opens_date_prior_cycle": "2025-10-10",
+      "rejected_date": ""
     },
     {
       "id": "barclays-hr-ip-watch",
@@ -817,7 +851,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "aon-pensionsindustrial-verify",
@@ -838,7 +873,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-24"
+      "opens_date_prior_cycle": "2025-09-24",
+      "rejected_date": ""
     },
     {
       "id": "aon-investmentconsulting-verify",
@@ -859,7 +895,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-24"
+      "opens_date_prior_cycle": "2025-09-24",
+      "rejected_date": ""
     },
     {
       "id": "oxfordproperties-finance-ip-watch",
@@ -880,7 +917,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "morganstanley-finance-ip-watch",
@@ -899,9 +937,10 @@
       "first_seen": "2026-09-01",
       "region_confirmed": true,
       "date_confidence": "indicative",
-      "application_status": "Not applied",
-      "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-01"
+      "application_status": "Applied",
+      "applied_date": "2026-09-08",
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "travelers-actuarial-placement-verify",
@@ -922,7 +961,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "oxfordeconomics-placement-watch",
@@ -943,7 +983,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-15"
+      "opens_date_prior_cycle": "2025-09-15",
+      "rejected_date": ""
     },
     {
       "id": "mako-hr-ip-watch",
@@ -964,7 +1005,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "hymansrobertson-ip-lowconfidence",
@@ -985,7 +1027,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "paconsulting-operationsimprovement-ip-watch",
@@ -1006,7 +1049,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "hayfin-internship-verify",
@@ -1027,7 +1071,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "alcentra-speculative",
@@ -1048,7 +1093,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "muzinich-speculative",
@@ -1069,7 +1115,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "alantra-speculative",
@@ -1090,7 +1137,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "cavendish-speculative",
@@ -1111,7 +1159,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "gcaaltium-speculative",
@@ -1132,7 +1181,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "waverton-speculative",
@@ -1153,7 +1203,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "bovillnewgate-speculative",
@@ -1174,7 +1225,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "thistleinitiatives-speculative",
@@ -1195,7 +1247,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "inigo-speculative",
@@ -1216,7 +1269,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "convex-speculative",
@@ -1237,7 +1291,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "northhighland-academy-ip-watch",
@@ -1258,7 +1313,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-02-06"
+      "opens_date_prior_cycle": "2026-02-06",
+      "rejected_date": ""
     },
     {
       "id": "curzonconsulting-speculative",
@@ -1279,7 +1335,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "fenchurchadvisory-speculative",
@@ -1300,7 +1357,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "controlrisks-speculative",
@@ -1321,7 +1379,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "elixirr-speculative",
@@ -1342,7 +1401,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "rolandberger-speculative",
@@ -1363,7 +1423,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "rbbeconomics-speculative",
@@ -1384,7 +1445,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "vixio-verify",
@@ -1405,7 +1467,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "newtoneurope-speculative",
@@ -1426,7 +1489,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "baringa-speculative",
@@ -1447,7 +1511,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "kroll-forensicinvestigations-speculative",
@@ -1468,7 +1533,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "k2integrity-speculative",
@@ -1489,7 +1555,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "livingstonepartners-speculative",
@@ -1510,7 +1577,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "translinkcf-speculative",
@@ -1531,7 +1599,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "oghmapartners-speculative",
@@ -1552,7 +1621,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "troyassetmanagement-speculative",
@@ -1573,7 +1643,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "rwcpartners-speculative",
@@ -1594,7 +1665,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "schroders-internalaudit-placementyear-2027",
@@ -1615,7 +1687,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-15"
+      "opens_date_prior_cycle": "2025-10-15",
+      "rejected_date": ""
     },
     {
       "id": "schroders-corporateregulatorychange-placementyear-2027",
@@ -1636,7 +1709,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-15"
+      "opens_date_prior_cycle": "2025-10-15",
+      "rejected_date": ""
     },
     {
       "id": "schroders-businesstransformation-placementyear-2027",
@@ -1657,7 +1731,8 @@
       "date_confidence": "confirmed",
       "application_status": "Applied",
       "applied_date": "2026-09-03",
-      "opens_date_prior_cycle": "2025-10-15"
+      "opens_date_prior_cycle": "2025-10-15",
+      "rejected_date": ""
     },
     {
       "id": "mercedesamgf1-finance-ip-verify",
@@ -1678,7 +1753,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "rsm-consulting-placement2027-opensoon",
@@ -1699,7 +1775,8 @@
       "date_confidence": "confirmed",
       "application_status": "Applied",
       "applied_date": "2026-09-03",
-      "opens_date_prior_cycle": "2025-09-01"
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "networkrail-financeyii-2027-opensoon",
@@ -1720,7 +1797,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-17"
+      "opens_date_prior_cycle": "2025-10-17",
+      "rejected_date": ""
     },
     {
       "id": "santanderuk-risk-mk-watch",
@@ -1741,7 +1819,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "allicabank-speculative",
@@ -1762,7 +1841,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "alphasights-clientservice-placement-applied",
@@ -1781,9 +1861,10 @@
       "first_seen": "2026-09-03",
       "region_confirmed": true,
       "date_confidence": "unconfirmed",
-      "application_status": "Applied",
+      "application_status": "Rejected",
       "applied_date": "2026-09-03",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": "2026-09-08"
     },
     {
       "id": "marsh-riskconsultingacademy-watch",
@@ -1804,7 +1885,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-28"
+      "opens_date_prior_cycle": "2026-01-28",
+      "rejected_date": ""
     },
     {
       "id": "marsh-advisoryacademy-watch",
@@ -1825,7 +1907,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "quberesearch-verify",
@@ -1846,7 +1929,8 @@
       "date_confidence": "unconfirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "heptagoncapital-ip-watch",
@@ -1867,7 +1951,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-20"
+      "opens_date_prior_cycle": "2025-10-20",
+      "rejected_date": ""
     },
     {
       "id": "tideinsurance-ip-watch",
@@ -1888,7 +1973,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-24"
+      "opens_date_prior_cycle": "2025-11-24",
+      "rejected_date": ""
     },
     {
       "id": "evercore-privatefunds-ip-watch",
@@ -1909,7 +1995,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-29"
+      "opens_date_prior_cycle": "2025-09-29",
+      "rejected_date": ""
     },
     {
       "id": "silverpeak-placement-watch",
@@ -1930,7 +2017,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-02"
+      "opens_date_prior_cycle": "2025-09-02",
+      "rejected_date": ""
     },
     {
       "id": "redepartners-ip-watch",
@@ -1951,7 +2039,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-08"
+      "opens_date_prior_cycle": "2025-09-08",
+      "rejected_date": ""
     },
     {
       "id": "clairfield-cf-placement-watch",
@@ -1972,7 +2061,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-24"
+      "opens_date_prior_cycle": "2025-09-24",
+      "rejected_date": ""
     },
     {
       "id": "creditagricole-internship-watch",
@@ -1993,7 +2083,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-30"
+      "opens_date_prior_cycle": "2025-09-30",
+      "rejected_date": ""
     },
     {
       "id": "cooperparry-cf-placement-watch",
@@ -2014,7 +2105,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-10"
+      "opens_date_prior_cycle": "2025-10-10",
+      "rejected_date": ""
     },
     {
       "id": "cooperparry-audit-placement-watch",
@@ -2035,7 +2127,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-01"
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "xps-cf-placement-watch",
@@ -2056,7 +2149,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-14"
+      "opens_date_prior_cycle": "2025-10-14",
+      "rejected_date": ""
     },
     {
       "id": "xps-actuarial-placement-watch",
@@ -2077,7 +2171,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-10"
+      "opens_date_prior_cycle": "2025-10-10",
+      "rejected_date": ""
     },
     {
       "id": "citi-bankingplacement-watch",
@@ -2098,7 +2193,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-27"
+      "opens_date_prior_cycle": "2025-10-27",
+      "rejected_date": ""
     },
     {
       "id": "balurca-ip-watch",
@@ -2119,7 +2215,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-01"
+      "opens_date_prior_cycle": "2025-11-01",
+      "rejected_date": ""
     },
     {
       "id": "leerink-ib-placement-watch",
@@ -2140,7 +2237,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-20"
+      "opens_date_prior_cycle": "2025-11-20",
+      "rejected_date": ""
     },
     {
       "id": "houlihanlokey-restructuring-watch",
@@ -2161,7 +2259,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-20"
+      "opens_date_prior_cycle": "2026-01-20",
+      "rejected_date": ""
     },
     {
       "id": "opuscf-energy-placement-watch",
@@ -2182,7 +2281,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-02-24"
+      "opens_date_prior_cycle": "2026-02-24",
+      "rejected_date": ""
     },
     {
       "id": "abnamro-dcm-intern-watch",
@@ -2203,7 +2303,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-04-27"
+      "opens_date_prior_cycle": "2026-04-27",
+      "rejected_date": ""
     },
     {
       "id": "abnamro-markets-intern-watch",
@@ -2224,7 +2325,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-09"
+      "opens_date_prior_cycle": "2026-01-09",
+      "rejected_date": ""
     },
     {
       "id": "exxonmobil-globaltrading-watch",
@@ -2245,7 +2347,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-08-26"
+      "opens_date_prior_cycle": "2025-08-26",
+      "rejected_date": ""
     },
     {
       "id": "jpmorgan-marketseconresearch-watch",
@@ -2266,7 +2369,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-01"
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "rbc-globalmarkets-watch",
@@ -2287,7 +2391,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-30"
+      "opens_date_prior_cycle": "2025-09-30",
+      "rejected_date": ""
     },
     {
       "id": "bp-tradingshipping-watch",
@@ -2308,7 +2413,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-23"
+      "opens_date_prior_cycle": "2025-10-23",
+      "rejected_date": ""
     },
     {
       "id": "natixis-clo-intern-watch",
@@ -2329,7 +2435,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-28"
+      "opens_date_prior_cycle": "2025-10-28",
+      "rejected_date": ""
     },
     {
       "id": "natixis-creditrisk-intern-watch",
@@ -2350,7 +2457,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-23"
+      "opens_date_prior_cycle": "2025-09-23",
+      "rejected_date": ""
     },
     {
       "id": "adm-tradingintern-watch",
@@ -2371,7 +2479,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-19"
+      "opens_date_prior_cycle": "2025-11-19",
+      "rejected_date": ""
     },
     {
       "id": "spreadex-financialtrading-watch",
@@ -2392,7 +2501,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-12-08"
+      "opens_date_prior_cycle": "2025-12-08",
+      "rejected_date": ""
     },
     {
       "id": "engelhart-sandwichplacement-watch",
@@ -2413,7 +2523,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-02-04"
+      "opens_date_prior_cycle": "2026-02-04",
+      "rejected_date": ""
     },
     {
       "id": "natwestmarkets-risk-intern-watch",
@@ -2434,7 +2545,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-23"
+      "opens_date_prior_cycle": "2025-09-23",
+      "rejected_date": ""
     },
     {
       "id": "bbva-cib-intern-watch",
@@ -2455,7 +2567,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-01"
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "jefferies-riskmanagement-watch",
@@ -2476,7 +2589,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-08"
+      "opens_date_prior_cycle": "2025-09-08",
+      "rejected_date": ""
     },
     {
       "id": "mercuria-riskanalyst-placement-watch",
@@ -2497,7 +2611,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-25"
+      "opens_date_prior_cycle": "2025-09-25",
+      "rejected_date": ""
     },
     {
       "id": "hampshiretrustbank-creditrisk-watch",
@@ -2518,7 +2633,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-03"
+      "opens_date_prior_cycle": "2025-10-03",
+      "rejected_date": ""
     },
     {
       "id": "verisk-riskanalyst-watch",
@@ -2539,7 +2655,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-06"
+      "opens_date_prior_cycle": "2025-10-06",
+      "rejected_date": ""
     },
     {
       "id": "glencore-ip-watch",
@@ -2560,7 +2677,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-21"
+      "opens_date_prior_cycle": "2025-10-21",
+      "rejected_date": ""
     },
     {
       "id": "triodosbank-intern-watch",
@@ -2581,7 +2699,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-04"
+      "opens_date_prior_cycle": "2025-11-04",
+      "rejected_date": ""
     },
     {
       "id": "aspectcapital-financeassistant-watch",
@@ -2602,7 +2721,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-13"
+      "opens_date_prior_cycle": "2025-11-13",
+      "rejected_date": ""
     },
     {
       "id": "berenberg-tax-placement-watch",
@@ -2623,7 +2743,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-02-23"
+      "opens_date_prior_cycle": "2026-02-23",
+      "rejected_date": ""
     },
     {
       "id": "paragonbanking-prudentialrisk-watch",
@@ -2644,7 +2765,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-03-18"
+      "opens_date_prior_cycle": "2026-03-18",
+      "rejected_date": ""
     },
     {
       "id": "hilton-realestateam-placement-watch",
@@ -2665,7 +2787,8 @@
       "date_confidence": "confirmed",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-01"
+      "opens_date_prior_cycle": "2025-09-01",
+      "rejected_date": ""
     },
     {
       "id": "hsbc-investmentresearch-placement-watch",
@@ -2686,7 +2809,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-04"
+      "opens_date_prior_cycle": "2025-09-04",
+      "rejected_date": ""
     },
     {
       "id": "davy-placement-verify",
@@ -2707,7 +2831,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-26"
+      "opens_date_prior_cycle": "2025-09-26",
+      "rejected_date": ""
     },
     {
       "id": "dswventures-vc-analyst-watch",
@@ -2728,7 +2853,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-07"
+      "opens_date_prior_cycle": "2025-10-07",
+      "rejected_date": ""
     },
     {
       "id": "stepstone-privatedebt-intern-watch",
@@ -2749,7 +2875,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-08"
+      "opens_date_prior_cycle": "2025-10-08",
+      "rejected_date": ""
     },
     {
       "id": "stepstone-peinfra-intern-watch",
@@ -2770,7 +2897,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-15"
+      "opens_date_prior_cycle": "2025-10-15",
+      "rejected_date": ""
     },
     {
       "id": "franklintempleton-intern-watch",
@@ -2791,7 +2919,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-17"
+      "opens_date_prior_cycle": "2025-10-17",
+      "rejected_date": ""
     },
     {
       "id": "triton-financeintern-watch",
@@ -2812,7 +2941,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-29"
+      "opens_date_prior_cycle": "2025-10-29",
+      "rejected_date": ""
     },
     {
       "id": "legalandgeneral-yii-2027-watch",
@@ -2833,7 +2963,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-14"
+      "opens_date_prior_cycle": "2025-11-14",
+      "rejected_date": ""
     },
     {
       "id": "pgim-fixedincome-intern-watch",
@@ -2854,7 +2985,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-20"
+      "opens_date_prior_cycle": "2025-11-20",
+      "rejected_date": ""
     },
     {
       "id": "pgim-realestate-intern-watch",
@@ -2875,7 +3007,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-03-18"
+      "opens_date_prior_cycle": "2026-03-18",
+      "rejected_date": ""
     },
     {
       "id": "allianzgi-privatemarkets-intern-watch",
@@ -2896,7 +3029,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-12-04"
+      "opens_date_prior_cycle": "2025-12-04",
+      "rejected_date": ""
     },
     {
       "id": "allianzgi-privatecredit-intern-watch",
@@ -2917,7 +3051,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-03-20"
+      "opens_date_prior_cycle": "2026-03-20",
+      "rejected_date": ""
     },
     {
       "id": "morganstanley-im-offcycle-watch",
@@ -2938,7 +3073,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-12-09"
+      "opens_date_prior_cycle": "2025-12-09",
+      "rejected_date": ""
     },
     {
       "id": "axaim-infrastructuredebt-watch",
@@ -2959,7 +3095,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-12-15"
+      "opens_date_prior_cycle": "2025-12-15",
+      "rejected_date": ""
     },
     {
       "id": "statestreet-internship-watch",
@@ -2980,7 +3117,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-12-19"
+      "opens_date_prior_cycle": "2025-12-19",
+      "rejected_date": ""
     },
     {
       "id": "wilmingtontrust-gcm-intern-watch",
@@ -3001,7 +3139,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-06"
+      "opens_date_prior_cycle": "2026-01-06",
+      "rejected_date": ""
     },
     {
       "id": "quilter-im-earlycareers-watch",
@@ -3022,7 +3161,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-12"
+      "opens_date_prior_cycle": "2026-01-12",
+      "rejected_date": ""
     },
     {
       "id": "marsh-investmentquant-ip-watch",
@@ -3043,7 +3183,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-28"
+      "opens_date_prior_cycle": "2026-01-28",
+      "rejected_date": ""
     },
     {
       "id": "nationalwealthfund-financeintern-watch",
@@ -3064,7 +3205,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-03-02"
+      "opens_date_prior_cycle": "2026-03-02",
+      "rejected_date": ""
     },
     {
       "id": "intriva-pe-intern-watch",
@@ -3085,7 +3227,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-04-05"
+      "opens_date_prior_cycle": "2026-04-05",
+      "rejected_date": ""
     },
     {
       "id": "capgemini-consulting-ip-watch",
@@ -3106,7 +3249,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-28"
+      "opens_date_prior_cycle": "2025-10-28",
+      "rejected_date": ""
     },
     {
       "id": "isio-ip-watch",
@@ -3127,7 +3271,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-22"
+      "opens_date_prior_cycle": "2025-09-22",
+      "rejected_date": ""
     },
     {
       "id": "spenceandpartners-actuarial-watch",
@@ -3148,7 +3293,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-05"
+      "opens_date_prior_cycle": "2025-10-05",
+      "rejected_date": ""
     },
     {
       "id": "benefactgroup-actuarial-watch",
@@ -3169,7 +3315,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-08"
+      "opens_date_prior_cycle": "2025-10-08",
+      "rejected_date": ""
     },
     {
       "id": "bupa-placementstudent-watch",
@@ -3190,7 +3337,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-08"
+      "opens_date_prior_cycle": "2025-10-08",
+      "rejected_date": ""
     },
     {
       "id": "markel-ip-watch",
@@ -3211,7 +3359,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-12"
+      "opens_date_prior_cycle": "2025-11-12",
+      "rejected_date": ""
     },
     {
       "id": "ppf-actuarial-intern-watch",
@@ -3232,7 +3381,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-11-26"
+      "opens_date_prior_cycle": "2025-11-26",
+      "rejected_date": ""
     },
     {
       "id": "libertymutual-placementstudent-watch",
@@ -3253,7 +3403,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-12-12"
+      "opens_date_prior_cycle": "2025-12-12",
+      "rejected_date": ""
     },
     {
       "id": "menzies-placement-watch",
@@ -3274,7 +3425,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-09-26"
+      "opens_date_prior_cycle": "2025-09-26",
+      "rejected_date": ""
     },
     {
       "id": "srlv-accounting-placement-watch",
@@ -3295,7 +3447,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-20"
+      "opens_date_prior_cycle": "2025-10-20",
+      "rejected_date": ""
     },
     {
       "id": "pacificliferе-financialaccounting-watch",
@@ -3316,7 +3469,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-12-15"
+      "opens_date_prior_cycle": "2025-12-15",
+      "rejected_date": ""
     },
     {
       "id": "dainsaccountants-placement-watch",
@@ -3337,7 +3491,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-02-13"
+      "opens_date_prior_cycle": "2026-02-13",
+      "rejected_date": ""
     },
     {
       "id": "pricebailey-audit-trainee-watch",
@@ -3358,7 +3513,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-03-02"
+      "opens_date_prior_cycle": "2026-03-02",
+      "rejected_date": ""
     },
     {
       "id": "hazlewoods-accountancy-placement-watch",
@@ -3379,7 +3535,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-01"
+      "opens_date_prior_cycle": "2025-10-01",
+      "rejected_date": ""
     },
     {
       "id": "admiralgroup-pricinganalyst-watch",
@@ -3400,7 +3557,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-02"
+      "opens_date_prior_cycle": "2025-10-02",
+      "rejected_date": ""
     },
     {
       "id": "bishopfleming-placement-watch",
@@ -3421,7 +3579,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-02"
+      "opens_date_prior_cycle": "2025-10-02",
+      "rejected_date": ""
     },
     {
       "id": "cambridgeeconometrics-junioreconomist-verify",
@@ -3442,7 +3601,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-07"
+      "opens_date_prior_cycle": "2025-10-07",
+      "rejected_date": ""
     },
     {
       "id": "cmegroup-fixedincome-ip-verify",
@@ -3463,7 +3623,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-01-28"
+      "opens_date_prior_cycle": "2026-01-28",
+      "rejected_date": ""
     },
     {
       "id": "cmegroup-pricinganalyst-verify",
@@ -3484,7 +3645,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-04-22"
+      "opens_date_prior_cycle": "2026-04-22",
+      "rejected_date": ""
     },
     {
       "id": "ges-sandwichplacement-watch",
@@ -3505,7 +3667,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-02"
+      "opens_date_prior_cycle": "2025-10-02",
+      "rejected_date": ""
     },
     {
       "id": "fdmgroup-financeinternship-watch",
@@ -3526,7 +3689,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-03-26"
+      "opens_date_prior_cycle": "2026-03-26",
+      "rejected_date": ""
     },
     {
       "id": "ebrd-intern-watch",
@@ -3547,7 +3711,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2025-10-30"
+      "opens_date_prior_cycle": "2025-10-30",
+      "rejected_date": ""
     },
     {
       "id": "valsoft-ma-internship-verify",
@@ -3568,7 +3733,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": "2026-02-27"
+      "opens_date_prior_cycle": "2026-02-27",
+      "rejected_date": ""
     },
     {
       "id": "ubs-am-privatemarkets-ip-watch",
@@ -3589,7 +3755,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "kroll-restructuring-placementstudent-watch",
@@ -3610,7 +3777,8 @@
       "date_confidence": "indicative",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     },
     {
       "id": "milessmith-speculative",
@@ -3631,7 +3799,8 @@
       "date_confidence": "not_applicable",
       "application_status": "Not applied",
       "applied_date": "",
-      "opens_date_prior_cycle": ""
+      "opens_date_prior_cycle": "",
+      "rejected_date": ""
     }
   ]
 }

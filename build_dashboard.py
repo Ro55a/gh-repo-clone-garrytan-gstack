@@ -197,6 +197,11 @@ HTML_TEMPLATE = """<!doctype html>
     background: rgba(62,207,142,0.15); color: var(--green); font-size: 10.5px; font-weight: 700;
     vertical-align: middle;
   }
+  .rejected-badge {
+    display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px;
+    background: rgba(239,90,111,0.15); color: var(--red); font-size: 10.5px; font-weight: 700;
+    vertical-align: middle;
+  }
   .days-left { font-size: 11.5px; }
   .days-urgent { color: var(--red); font-weight: 700; }
   .flag { font-size: 11px; color: var(--text-faint); }
@@ -222,7 +227,7 @@ HTML_TEMPLATE = """<!doctype html>
     <div class="card amber" data-filter="status:Opens soon"><div class="num" id="cardOpeningSoon">0</div><div class="label">Opening soon</div></div>
     <div class="card red" data-filter="urgent"><div class="num" id="cardClosingSoon">0</div><div class="label">Closing soon (&lt;14 days)</div></div>
     <div class="card purple" data-filter="unconfirmed"><div class="num" id="cardUnconfirmed">0</div><div class="label">Unconfirmed dates</div></div>
-    <div class="card green" data-filter="applied"><div class="num" id="cardApplied">0</div><div class="label">Applied</div></div>
+    <div class="card green" data-filter="applied"><div class="num" id="cardApplied">0</div><div class="label">Applications sent</div></div>
   </div>
 
   <div class="toolbar">
@@ -309,7 +314,7 @@ const openCount = roles.filter(r => r.status === 'Open').length;
 const openingSoonCount = roles.filter(r => r.status === 'Opens soon').length;
 const closingSoonCount = roles.filter(r => r._urgent).length;
 const unconfirmedCount = roles.filter(r => r._unconfirmed).length;
-const appliedCount = roles.filter(r => r.application_status === 'Applied').length;
+const appliedCount = roles.filter(r => r.application_status === 'Applied' || r.application_status === 'Rejected').length;
 
 document.getElementById('cardTotal').textContent = total;
 document.getElementById('cardOpen').textContent = openCount;
@@ -370,7 +375,7 @@ function passesCardFilter(r) {
     case 'status:Opens soon': return r.status === 'Opens soon';
     case 'urgent': return r._urgent;
     case 'unconfirmed': return r._unconfirmed;
-    case 'applied': return r.application_status === 'Applied';
+    case 'applied': return r.application_status === 'Applied' || r.application_status === 'Rejected';
     default: return true;
   }
 }
@@ -423,7 +428,9 @@ function render() {
 
     const appliedBadge = r.application_status === 'Applied'
       ? ' <span class="applied-badge" title="Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '') + '">&#10003; Applied</span>'
-      : '';
+      : (r.application_status === 'Rejected'
+        ? ' <span class="rejected-badge" title="Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '') + (r.rejected_date ? ', rejected ' + escapeHtml(r.rejected_date) : '') + '">&#10007; Rejected</span>'
+        : '');
 
     tr.innerHTML =
       '<td><div class="company">' + escapeHtml(r.company) + appliedBadge + '</div><div class="company-sub">' + escapeHtml(r.tier || '') + '</div></td>' +
@@ -444,7 +451,11 @@ function render() {
         '<span><b>Source:</b> ' + escapeHtml(r.source || '\\u2014') + '</span>' +
         '<span><b>First seen:</b> ' + escapeHtml(r.first_seen || '\\u2014') + '</span>' +
         '<span><b>Region confirmed:</b> ' + (r.region_confirmed ? 'yes' : 'no') + '</span>' +
-        '<span><b>Application:</b> ' + (r.application_status === 'Applied' ? ('Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '')) : 'Not applied yet') + '</span>' +
+        '<span><b>Application:</b> ' + (
+          r.application_status === 'Applied' ? ('Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '')) :
+          r.application_status === 'Rejected' ? ('Applied' + (r.applied_date ? ' on ' + escapeHtml(r.applied_date) : '') + ' - Rejected' + (r.rejected_date ? ' on ' + escapeHtml(r.rejected_date) : '')) :
+          'Not applied yet'
+        ) + '</span>' +
         '<span><b>ID:</b> ' + escapeHtml(r.id || '') + '</span>' +
       '</div></div></td>';
 
