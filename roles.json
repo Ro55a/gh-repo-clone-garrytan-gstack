@@ -101,10 +101,10 @@
       "first_seen": "2026-09-01",
       "region_confirmed": true,
       "date_confidence": "confirmed",
-      "application_status": "Applied",
+      "application_status": "Rejected",
       "applied_date": "2026-09-03",
       "opens_date_prior_cycle": "2025-09-05",
-      "rejected_date": ""
+      "rejected_date": "2026-09-08"
     },
     {
       "id": "ubs-globalbanking-ip-2027",
@@ -1773,10 +1773,10 @@
       "first_seen": "2026-09-03",
       "region_confirmed": false,
       "date_confidence": "confirmed",
-      "application_status": "Applied",
+      "application_status": "Rejected",
       "applied_date": "2026-09-03",
       "opens_date_prior_cycle": "2025-09-01",
-      "rejected_date": ""
+      "rejected_date": "2026-09-08"
     },
     {
       "id": "networkrail-financeyii-2027-opensoon",
