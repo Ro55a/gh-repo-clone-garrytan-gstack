@@ -26,20 +26,8 @@ def build_html(data):
     meta = data.get("meta", {})
     roles = data.get("roles", [])
 
-    # Only embed the meta/profile fields the dashboard UI actually reads.
-    # roles.json keeps the full process log (environment_notes, sourcing_rules,
-    # etc.) as the source of truth; dumping that multi-day internal log into
-    # every page load bloats the file and renders as noise in the footer.
-    slim_meta = {
-        "last_updated": meta.get("last_updated"),
-        "last_discovery_run": meta.get("last_discovery_run"),
-    }
-    slim_profile = {
-        "name": profile.get("name"),
-        "target": profile.get("target"),
-    }
     payload = json.dumps(
-        {"profile": slim_profile, "meta": slim_meta, "roles": roles},
+        {"profile": profile, "meta": meta, "roles": roles},
         ensure_ascii=False,
     )
     # Escape "</script>" so the inlined JSON can never break out of its tag.
@@ -280,8 +268,9 @@ document.getElementById('metaLine').textContent =
   '  |  Last updated: ' + (meta.last_updated || 'n/a') +
   '  |  Region: ' + (profile.target ? profile.target.region : 'London only');
 
-document.getElementById('footer').textContent =
-  'Sourcing rules: dates are only recorded from a region-specific source; unconfirmed dates are never alerted on.';
+document.getElementById('footer').innerHTML =
+  'Sourcing rules: dates are only recorded from a region-specific source; unconfirmed dates are never alerted on. ' +
+  (meta.environment_notes ? escapeHtml(meta.environment_notes) : '');
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
